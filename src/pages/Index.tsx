@@ -1,7 +1,2 @@
-import { CVBuilder } from '@/components/cv/CVBuilder';
-
-const Index = () => {
-  return <CVBuilder />;
-};
-
-export default Index;
+import Landing from "./Landing";
+export default Landing;
