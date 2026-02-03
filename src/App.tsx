@@ -8,6 +8,7 @@ import Auth from "./pages/Auth";
 import Templates from "./pages/Templates";
 import MyCVs from "./pages/MyCVs";
 import Builder from "./pages/Builder";
+import CVAnalysis from "./pages/CVAnalysis";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/templates" element={<Templates />} />
           <Route path="/my-cvs" element={<MyCVs />} />
           <Route path="/builder" element={<Builder />} />
+          <Route path="/cv-analysis" element={<CVAnalysis />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
