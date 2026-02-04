@@ -125,7 +125,7 @@ export const Auth = () => {
       <div className="fixed -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-20" />
       <div className="fixed -bottom-32 -right-32 w-96 h-96 bg-accent/15 rounded-full blur-3xl -z-20" />
       <div className="fixed top-1/3 left-1/3 w-80 h-80 bg-primary/8 rounded-full blur-3xl -z-20" />
-      
+
       {/* Header */}
       <header className="border-b border-border/50 bg-card/50 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -169,11 +169,10 @@ export const Auth = () => {
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setMode(tab.id as AuthMode)}
-                        className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
-                          mode === tab.id
+                        className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${mode === tab.id
                             ? 'bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/25'
                             : 'text-muted-foreground hover:text-foreground'
-                        }`}
+                          }`}
                       >
                         {tab.label}
                       </motion.button>
@@ -226,9 +225,8 @@ export const Auth = () => {
                                   {Array.from({ length: 64 }).map((_, i) => (
                                     <div
                                       key={i}
-                                      className={`${
-                                        Math.random() > 0.5 ? 'bg-background' : 'bg-transparent'
-                                      }`}
+                                      className={`${Math.random() > 0.5 ? 'bg-background' : 'bg-transparent'
+                                        }`}
                                     />
                                   ))}
                                 </div>
@@ -239,10 +237,17 @@ export const Auth = () => {
                                   <motion.div
                                     animate={{ scale: [1, 1.1, 1] }}
                                     transition={{ duration: 2, repeat: Infinity }}
-                                    className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg"
+                                    className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg"
                                   >
-                                    <FileText className="w-6 h-6 text-primary-foreground" />
+                                    {/* <FileText className="w-6 h-6 text-primary-foreground" /> */}
+                                    <img
+                                      src="https://play-lh.googleusercontent.com/z81hJTceXbEjcaqkxbOpSrG1eps7Yprf_VsBrT1wnJ1YK_vQOcFLkME5P8tozRPosA=w480-h960-rw"
+                                      alt="MeuCV"
+                                      className="w-full h-full object-cover"
+                                    />
                                   </motion.div>
+
+
                                 </div>
                               </div>
                             </motion.div>
