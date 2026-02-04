@@ -495,7 +495,7 @@ export const Landing = () => {
           >
             <Badge variant="secondary" className="mb-4">Como Funciona</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Três Passos Simples
+              Como criar um currículo profissional em 3 passos
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
               Crie o currículo perfeito em menos de 10 minutos
@@ -540,7 +540,7 @@ export const Landing = () => {
           >
             <Badge variant="secondary" className="mb-4">Funcionalidades</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Tudo o que Precisa
+              Tudo o que Precisa para um Currículo de Sucesso
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
               Ferramentas poderosas para criar currículos que impressionam
