@@ -107,9 +107,9 @@ export const Templates = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-hidden">
       {/* Header */}
-      <header className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-border bg-card/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="icon" asChild>
@@ -144,18 +144,33 @@ export const Templates = () => {
       </header>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-12 pt-20 relative overflow-hidden min-h-screen">
+        {/* Background Effects - Full coverage */}
+        <div className="fixed inset-0 bg-gradient-to-b from-background via-background to-muted/20 -z-20" />
+        <div className="fixed -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-20" />
+        <div className="fixed -bottom-32 -right-32 w-96 h-96 bg-accent/15 rounded-full blur-3xl -z-20" />
+        <div className="fixed top-1/3 right-1/4 w-72 h-72 bg-primary/8 rounded-full blur-3xl -z-20" />
+
+        <div className="relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-8"
+          className="text-center mb-12"
         >
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
-            Escolha o seu Modelo
+          <motion.div
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-4 border border-primary/20"
+          >
+            <Sparkles className="w-4 h-4" />
+            Templates Profissionais
+          </motion.div>
+          <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-4">
+            Escolha o Seu Modelo
           </h1>
-          <p className="text-muted-foreground max-w-xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Selecione um dos nossos templates profissionais e comece a criar o seu currículo
-            perfeito.
+            perfeito. Cada modelo foi cuidadosamente desenvolvido para destacar as suas qualificações.
           </p>
         </motion.div>
 
@@ -164,19 +179,25 @@ export const Templates = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="flex flex-wrap justify-center gap-2 mb-8"
+          className="flex flex-wrap justify-center gap-2 mb-10"
         >
-          {categories.map((category) => (
-            <Button
+          {categories.map((category, i) => (
+            <motion.div
               key={category.id}
-              variant={selectedCategory === category.id ? 'default' : 'outline'}
-              size="sm"
-              onClick={() => setSelectedCategory(category.id)}
-              className="transition-all"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 + i * 0.05 }}
             >
-              {category.id === 'all' && <Filter className="w-4 h-4 mr-1" />}
-              {category.label}
-            </Button>
+              <Button
+                variant={selectedCategory === category.id ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedCategory(category.id)}
+                className="transition-all border-primary/30 hover:border-primary/60"
+              >
+                {category.id === 'all' && <Filter className="w-4 h-4 mr-1" />}
+                {category.label}
+              </Button>
+            </motion.div>
           ))}
         </motion.div>
 
@@ -196,31 +217,36 @@ export const Templates = () => {
                 transition={{ delay: index * 0.05 }}
               >
                 <Card
-                  className={`cursor-pointer transition-all hover:shadow-xl group ${
+                  className={`cursor-pointer transition-all hover:shadow-2xl hover:shadow-primary/20 group overflow-hidden ${
                     selectedTemplate === template.id
-                      ? 'ring-2 ring-primary border-primary'
-                      : 'hover:border-primary/50'
+                      ? 'ring-2 ring-primary border-primary shadow-xl shadow-primary/20'
+                      : 'border-primary/20 hover:border-primary/50 bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-sm'
                   }`}
                   onClick={() => setSelectedTemplate(template.id)}
                 >
                   <CardContent className="p-0">
                     {/* Template Preview */}
-                    <div className="aspect-[3/4] bg-[hsl(var(--cv-preview-bg))] p-4 relative overflow-hidden">
+                    <div className="aspect-[4/5] bg-gradient-to-br from-white dark:from-card to-muted/10 p-3 relative overflow-hidden">
                       {/* Badges */}
-                      <div className="absolute top-2 right-2 flex gap-1 z-10">
+                      <motion.div 
+                        className="absolute top-2 right-2 flex gap-1 z-10"
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.1 }}
+                      >
                         {template.isPopular && (
-                          <Badge variant="secondary" className="text-xs">
+                          <Badge variant="secondary" className="text-xs bg-gradient-to-r from-amber-500/20 to-orange-500/20 text-amber-700 dark:text-amber-400 border-amber-500/30">
                             <Star className="w-3 h-3 mr-1 fill-current" />
                             Popular
                           </Badge>
                         )}
                         {template.isPremium && (
-                          <Badge className="text-xs bg-gradient-to-r from-amber-500 to-orange-500 border-0">
+                          <Badge className="text-xs bg-gradient-to-r from-amber-500 to-orange-500 border-0 text-white shadow-lg shadow-amber-500/30">
                             <Sparkles className="w-3 h-3 mr-1" />
                             Premium
                           </Badge>
                         )}
-                      </div>
+                      </motion.div>
 
                       {/* Selected indicator */}
                       <AnimatePresence>
@@ -231,7 +257,7 @@ export const Templates = () => {
                             exit={{ scale: 0 }}
                             className="absolute top-2 left-2 z-10"
                           >
-                            <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center">
+                            <div className="w-6 h-6 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg shadow-primary/40">
                               <Check className="w-4 h-4 text-primary-foreground" />
                             </div>
                           </motion.div>
@@ -245,69 +271,74 @@ export const Templates = () => {
                         transition={{ type: 'spring', stiffness: 300 }}
                       >
                         <div
-                          className="border-l-2 pl-2 mb-2"
+                          className="border-l-3 pl-2.5 mb-2.5"
                           style={{ borderColor: template.preview.accentColor }}
                         >
                           <div className="font-bold text-[8px] text-foreground">Nome Completo</div>
-                          <div className="text-muted-foreground">Profissão</div>
+                          <div className="text-muted-foreground text-[7px]">Profissão</div>
                         </div>
 
                         <div className="space-y-2">
                           <div>
                             <div
-                              className="font-medium text-[7px] mb-1"
+                              className="font-semibold text-[7px] mb-1"
                               style={{ color: template.preview.accentColor }}
                             >
-                              Sobre
+                              SOBRE
                             </div>
-                            <div className="h-1 bg-muted rounded w-full" />
-                            <div className="h-1 bg-muted rounded w-4/5 mt-0.5" />
+                            <div className="h-0.5 bg-muted rounded w-full" />
+                            <div className="h-0.5 bg-muted rounded w-4/5 mt-0.5" />
                           </div>
 
                           <div>
                             <div
-                              className="font-medium text-[7px] mb-1"
+                              className="font-semibold text-[7px] mb-1"
                               style={{ color: template.preview.accentColor }}
                             >
-                              Experiência
+                              EXPERIÊNCIA
                             </div>
-                            <div className="h-1 bg-muted rounded w-full" />
-                            <div className="h-1 bg-muted rounded w-3/4 mt-0.5" />
-                            <div className="h-1 bg-muted rounded w-5/6 mt-0.5" />
+                            <div className="h-0.5 bg-muted rounded w-full" />
+                            <div className="h-0.5 bg-muted rounded w-3/4 mt-0.5" />
                           </div>
 
                           <div>
                             <div
-                              className="font-medium text-[7px] mb-1"
+                              className="font-semibold text-[7px] mb-1"
                               style={{ color: template.preview.accentColor }}
                             >
-                              Educação
+                              EDUCAÇÃO
                             </div>
-                            <div className="h-1 bg-muted rounded w-full" />
-                            <div className="h-1 bg-muted rounded w-2/3 mt-0.5" />
+                            <div className="h-0.5 bg-muted rounded w-full" />
+                            <div className="h-0.5 bg-muted rounded w-2/3 mt-0.5" />
                           </div>
                         </div>
                       </motion.div>
 
                       {/* Hover overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     </div>
 
                     {/* Template Info */}
-                    <div className="p-4 border-t border-border">
-                      <h3 className="font-semibold text-foreground mb-1">{template.name}</h3>
-                      <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
+                    <div className="p-4 border-t border-border/50 bg-gradient-to-b from-card/50 to-transparent">
+                      <h3 className="font-bold text-foreground mb-1.5 text-sm">{template.name}</h3>
+                      <p className="text-xs text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
                         {template.description}
                       </p>
-                      <Button
-                        className="w-full"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleUseTemplate(template.id);
-                        }}
+                      <motion.div
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                       >
-                        Usar este Modelo
-                      </Button>
+                        <Button
+                          className="w-full h-9 text-sm shadow-lg shadow-primary/25 bg-gradient-to-r from-primary to-primary/90 hover:shadow-xl hover:shadow-primary/40"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleUseTemplate(template.id);
+                          }}
+                        >
+                          <Sparkles className="w-3 h-3 mr-1.5" />
+                          Usar este Modelo
+                        </Button>
+                      </motion.div>
                     </div>
                   </CardContent>
                 </Card>
@@ -315,12 +346,15 @@ export const Templates = () => {
             ))}
           </AnimatePresence>
         </motion.div>
+        </div>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border py-6 mt-12">
+      <footer className="border-t border-border py-8 bg-gradient-to-b from-background via-background to-muted/40 relative z-10">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-muted-foreground">Design by Marino Ricardo</p>
+          <p className="text-sm text-muted-foreground">
+            © 2024 MeuCV. Design by Marino Ricardo.
+          </p>
         </div>
       </footer>
     </div>

@@ -142,7 +142,7 @@ export const Landing = () => {
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Header */}
-      <header className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-50">
+      <header className="border-b border-border bg-card/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <motion.div
@@ -186,10 +186,13 @@ export const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 overflow-hidden">
+      <section className="relative pt-16 pb-20 md:pt-40 md:pb-20 overflow-hidden">
         {/* Background Effects */}
-        <div className="absolute inset-0 bg-gradient-to-b from-accent/30 via-background to-background" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background via-80% to-accent/30" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/15 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/20 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl" />
         
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
@@ -289,7 +292,9 @@ export const Landing = () => {
       </section>
 
       {/* Preview Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-gradient-to-b from-background via-accent/10 to-muted/40 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-accent/15 rounded-full blur-3xl" />
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
@@ -405,14 +410,16 @@ export const Landing = () => {
       </section>
 
       {/* CV Analysis CTA */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+        <div className="absolute -top-40 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-32 right-1/3 w-80 h-80 bg-accent/15 rounded-full blur-3xl" />
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Card className="bg-gradient-to-br from-primary/5 via-accent/50 to-primary/5 border-primary/10 overflow-hidden">
+            <Card className="bg-gradient-to-br from-primary/10 via-primary/5 to-accent/20 border-primary/20 overflow-hidden backdrop-blur-sm shadow-2xl shadow-primary/10">
               <CardContent className="p-8 md:p-12">
                 <div className="grid md:grid-cols-2 gap-8 items-center">
                   <div>
@@ -472,7 +479,9 @@ export const Landing = () => {
       </section>
 
       {/* How it Works */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-gradient-to-r from-muted/40 via-background to-muted/40 relative overflow-hidden">
+        <div className="absolute top-1/2 -right-48 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
+        <div className="absolute top-0 -left-32 w-72 h-72 bg-accent/10 rounded-full blur-3xl" />
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -503,8 +512,8 @@ export const Landing = () => {
                   <div className="hidden md:block absolute top-12 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-border to-transparent" />
                 )}
                 <motion.div
-                  whileHover={{ scale: 1.05, rotate: -3 }}
-                  className="w-24 h-24 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground rounded-3xl flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-xl shadow-primary/25"
+                  whileHover={{ scale: 1.08, rotate: -3 }}
+                  className="w-24 h-24 bg-gradient-to-br from-primary via-primary to-primary/70 text-primary-foreground rounded-3xl flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-2xl shadow-primary/40 border border-white/20"
                 >
                   {step.number}
                 </motion.div>
@@ -534,11 +543,11 @@ export const Landing = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto relative z-10">
             {features.map((feature, index) => (
-              <AnimatedCard key={index} delay={index * 0.05} className="border-border hover:border-primary/30 hover:shadow-lg transition-all">
+              <AnimatedCard key={index} delay={index * 0.05} className="border-primary/20 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20 transition-all bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary/10 to-accent rounded-2xl flex items-center justify-center mb-4">
+                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/15 flex items-center justify-center mb-4 rounded-2xl border border-primary/20">
                     <feature.icon className="w-7 h-7 text-primary" />
                   </div>
                   <h3 className="font-bold text-lg text-foreground mb-2">{feature.title}</h3>
@@ -551,7 +560,9 @@ export const Landing = () => {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-20 bg-muted/30">
+      <section id="pricing" className="py-20 bg-gradient-to-b from-background from-50% via-primary/5 to-accent/10 relative overflow-hidden">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-accent/15 rounded-full blur-3xl" />
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -568,7 +579,7 @@ export const Landing = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto relative z-10">
             {pricingPlans.map((plan, index) => (
               <motion.div
                 key={index}
@@ -577,7 +588,7 @@ export const Landing = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className={`h-full relative overflow-hidden ${plan.popular ? 'border-primary shadow-xl shadow-primary/10' : 'border-border'}`}>
+                <Card className={`h-full relative overflow-hidden backdrop-blur-sm ${plan.popular ? 'border-primary/50 shadow-2xl shadow-primary/20 bg-gradient-to-br from-primary/15 to-primary/5' : 'border-border/50 bg-gradient-to-br from-card/80 to-card/40'}`}>
                   {plan.popular && (
                     <div className="absolute top-0 right-0">
                       <div className="bg-primary text-primary-foreground text-xs font-bold px-4 py-1.5 rounded-bl-lg flex items-center gap-1">
@@ -622,7 +633,9 @@ export const Landing = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20">
+      <section className="py-20 bg-gradient-to-b from-background via-accent/5 to-muted/30 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-accent/12 rounded-full blur-3xl" />
         <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -639,7 +652,7 @@ export const Landing = () => {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto relative z-10">
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
@@ -648,7 +661,7 @@ export const Landing = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="h-full hover:shadow-lg transition-shadow">
+                <Card className="h-full hover:shadow-xl hover:shadow-primary/15 transition-all bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30">
                   <CardContent className="p-6">
                     <div className="flex items-center gap-1 mb-4">
                       {Array.from({ length: testimonial.rating }).map((_, i) => (
@@ -674,8 +687,8 @@ export const Landing = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
+      <section className="py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -705,7 +718,7 @@ export const Landing = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-border py-12 bg-muted/30">
+      <footer className="border-t border-border py-12 bg-gradient-to-b from-background to-muted/40 relative overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
