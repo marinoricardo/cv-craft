@@ -186,7 +186,7 @@ export const Landing = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-16 pb-20 md:pt-40 md:pb-20 overflow-hidden">
+      <section className="relative pt-24 pb-20 md:pt-40 md:pb-20 overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background via-80% to-accent/30" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/15 rounded-full blur-3xl" />

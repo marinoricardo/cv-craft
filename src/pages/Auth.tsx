@@ -18,6 +18,10 @@ import {
   ArrowRight,
   Eye,
   EyeOff,
+  Sparkles,
+  TrendingUp,
+  Award,
+  Zap,
 } from 'lucide-react';
 
 type AuthMode = 'qr' | 'login' | 'register';
@@ -115,49 +119,60 @@ export const Auth = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col overflow-hidden">
+      {/* Background Effects */}
+      <div className="fixed inset-0 bg-gradient-to-br from-background via-background to-muted/20 -z-20" />
+      <div className="fixed -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-20" />
+      <div className="fixed -bottom-32 -right-32 w-96 h-96 bg-accent/15 rounded-full blur-3xl -z-20" />
+      <div className="fixed top-1/3 left-1/3 w-80 h-80 bg-primary/8 rounded-full blur-3xl -z-20" />
+      
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm">
+      <header className="border-b border-border/50 bg-card/50 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+          <Link to="/" className="flex items-center gap-2 group">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg shadow-primary/25"
+            >
               <FileText className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <span className="font-bold text-xl text-foreground">MeuCV</span>
+            </motion.div>
+            <span className="font-bold text-xl text-foreground group-hover:text-primary transition-colors">MeuCV</span>
           </Link>
           <ThemeToggle />
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center p-4">
+      <main className="flex-1 flex items-center justify-center p-4 relative z-10">
         <div className="w-full max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <Card className="border-0 shadow-xl overflow-hidden">
+            <Card className="border-0 shadow-2xl shadow-primary/10 overflow-hidden bg-gradient-to-br from-card/95 to-card/80 backdrop-blur-sm">
               <div className="grid md:grid-cols-2">
                 {/* Left - Forms */}
                 <div className="p-8 md:p-10">
                   {/* Mode Tabs */}
-                  <div className="flex gap-2 p-1 bg-muted rounded-lg mb-8">
+                  <div className="flex gap-2 p-1 bg-muted/50 rounded-lg mb-8 backdrop-blur-sm border border-primary/10">
                     {[
                       { id: 'login', label: 'Entrar' },
                       { id: 'register', label: 'Registar' },
                       { id: 'qr', label: 'QR Code' },
                     ].map((tab) => (
-                      <button
+                      <motion.button
                         key={tab.id}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
                         onClick={() => setMode(tab.id as AuthMode)}
                         className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${
                           mode === tab.id
-                            ? 'bg-card text-foreground shadow-sm'
+                            ? 'bg-gradient-to-r from-primary to-primary/90 text-primary-foreground shadow-lg shadow-primary/25'
                             : 'text-muted-foreground hover:text-foreground'
                         }`}
                       >
                         {tab.label}
-                      </button>
+                      </motion.button>
                     ))}
                   </div>
 
@@ -171,31 +186,38 @@ export const Auth = () => {
                         className="text-center"
                       >
                         {isConnected ? (
-                          <div className="py-8">
-                            <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-                              <CheckCircle2 className="w-10 h-10 text-green-600 dark:text-green-400" />
-                            </div>
-                            <h3 className="text-xl font-semibold text-foreground mb-2">
+                          <div className="py-12">
+                            <motion.div
+                              initial={{ scale: 0, opacity: 0 }}
+                              animate={{ scale: 1, opacity: 1 }}
+                              transition={{ type: 'spring', stiffness: 100 }}
+                              className="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/30"
+                            >
+                              <CheckCircle2 className="w-12 h-12 text-white" />
+                            </motion.div>
+                            <h3 className="text-2xl font-bold text-foreground mb-2">
                               Conectado com Sucesso!
                             </h3>
                             <p className="text-muted-foreground">A redirecionar...</p>
                           </div>
                         ) : isScanning ? (
-                          <div className="py-8">
-                            <LoadingSpinner size="lg" className="mx-auto mb-4" />
-                            <h3 className="text-xl font-semibold text-foreground mb-2">
+                          <div className="py-12">
+                            <LoadingSpinner size="lg" className="mx-auto mb-6" />
+                            <h3 className="text-2xl font-bold text-foreground mb-2">
                               A conectar...
                             </h3>
-                            <p className="text-muted-foreground">Por favor aguarde</p>
+                            <p className="text-muted-foreground text-sm">Por favor aguarde enquanto digitalizamos o QR</p>
                           </div>
                         ) : (
                           <>
-                            <div
+                            <motion.div
                               key={qrKey}
                               onClick={simulateScan}
-                              className="w-48 h-48 bg-card border-2 border-border rounded-xl p-3 cursor-pointer hover:border-primary transition-colors mx-auto"
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              className="w-56 h-56 bg-gradient-to-br from-card to-muted border-2 border-primary/30 hover:border-primary/60 rounded-2xl p-4 cursor-pointer hover:shadow-lg hover:shadow-primary/20 transition-all mx-auto mb-6"
                             >
-                              <div className="w-full h-full bg-foreground rounded-lg relative overflow-hidden">
+                              <div className="w-full h-full bg-foreground/90 rounded-lg relative overflow-hidden shadow-inner">
                                 <div className="absolute inset-2 grid grid-cols-8 gap-0.5">
                                   {Array.from({ length: 64 }).map((_, i) => (
                                     <div
@@ -210,18 +232,22 @@ export const Auth = () => {
                                 <div className="absolute top-2 right-2 w-6 h-6 border-4 border-background rounded" />
                                 <div className="absolute bottom-2 left-2 w-6 h-6 border-4 border-background rounded" />
                                 <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                                    <FileText className="w-5 h-5 text-primary-foreground" />
-                                  </div>
+                                  <motion.div
+                                    animate={{ scale: [1, 1.1, 1] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                    className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg"
+                                  >
+                                    <FileText className="w-6 h-6 text-primary-foreground" />
+                                  </motion.div>
                                 </div>
                               </div>
-                            </div>
-                            <p className="text-sm text-muted-foreground mt-3">
-                              Clique para simular scan
+                            </motion.div>
+                            <p className="text-sm text-muted-foreground mb-3 font-medium">
+                              Clique no código QR para simular digitalização
                             </p>
-                            <Button variant="ghost" size="sm" onClick={refreshQR} className="mt-2">
+                            <Button variant="ghost" size="sm" onClick={refreshQR} className="text-primary hover:text-primary hover:bg-primary/10">
                               <RefreshCw className="w-4 h-4 mr-2" />
-                              Atualizar QR
+                              Atualizar QR Code
                             </Button>
                           </>
                         )}
@@ -239,18 +265,18 @@ export const Auth = () => {
                       >
                         <div className="mb-6">
                           <h2 className="text-2xl font-bold text-foreground">
-                            {mode === 'login' ? 'Bem-vindo de volta' : 'Criar conta'}
+                            {mode === 'login' ? 'Bem-vindo de volta' : 'Criar sua conta'}
                           </h2>
-                          <p className="text-muted-foreground">
+                          <p className="text-muted-foreground text-sm">
                             {mode === 'login'
                               ? 'Entre para aceder aos seus currículos'
-                              : 'Preencha os dados para criar a sua conta'}
+                              : 'Comece a transformar seu currículo agora'}
                           </p>
                         </div>
 
                         {mode === 'register' && (
                           <div className="space-y-2">
-                            <Label htmlFor="name">Nome completo</Label>
+                            <Label htmlFor="name" className="text-sm font-semibold">Nome completo</Label>
                             <div className="relative">
                               <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                               <Input
@@ -261,17 +287,17 @@ export const Auth = () => {
                                 onChange={(e) =>
                                   setFormData({ ...formData, name: e.target.value })
                                 }
-                                className="pl-10"
+                                className="pl-10 h-11 border-primary/20 focus:border-primary focus:ring-primary/20 bg-muted/50"
                               />
                             </div>
                             {errors.name && (
-                              <p className="text-sm text-destructive">{errors.name}</p>
+                              <p className="text-sm text-destructive font-medium">{errors.name}</p>
                             )}
                           </div>
                         )}
 
                         <div className="space-y-2">
-                          <Label htmlFor="email">Email</Label>
+                          <Label htmlFor="email" className="text-sm font-semibold">Email</Label>
                           <div className="relative">
                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                             <Input
@@ -282,16 +308,16 @@ export const Auth = () => {
                               onChange={(e) =>
                                 setFormData({ ...formData, email: e.target.value })
                               }
-                              className="pl-10"
+                              className="pl-10 h-11 border-primary/20 focus:border-primary focus:ring-primary/20 bg-muted/50"
                             />
                           </div>
                           {errors.email && (
-                            <p className="text-sm text-destructive">{errors.email}</p>
+                            <p className="text-sm text-destructive font-medium">{errors.email}</p>
                           )}
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="password">Palavra-passe</Label>
+                          <Label htmlFor="password" className="text-sm font-semibold">Palavra-passe</Label>
                           <div className="relative">
                             <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                             <Input
@@ -302,12 +328,12 @@ export const Auth = () => {
                               onChange={(e) =>
                                 setFormData({ ...formData, password: e.target.value })
                               }
-                              className="pl-10 pr-10"
+                              className="pl-10 pr-10 h-11 border-primary/20 focus:border-primary focus:ring-primary/20 bg-muted/50"
                             />
                             <button
                               type="button"
                               onClick={() => setShowPassword(!showPassword)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
                             >
                               {showPassword ? (
                                 <EyeOff className="w-5 h-5" />
@@ -317,13 +343,13 @@ export const Auth = () => {
                             </button>
                           </div>
                           {errors.password && (
-                            <p className="text-sm text-destructive">{errors.password}</p>
+                            <p className="text-sm text-destructive font-medium">{errors.password}</p>
                           )}
                         </div>
 
                         {mode === 'register' && (
                           <div className="space-y-2">
-                            <Label htmlFor="confirmPassword">Confirmar palavra-passe</Label>
+                            <Label htmlFor="confirmPassword" className="text-sm font-semibold">Confirmar palavra-passe</Label>
                             <div className="relative">
                               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                               <Input
@@ -334,11 +360,11 @@ export const Auth = () => {
                                 onChange={(e) =>
                                   setFormData({ ...formData, confirmPassword: e.target.value })
                                 }
-                                className="pl-10"
+                                className="pl-10 h-11 border-primary/20 focus:border-primary focus:ring-primary/20 bg-muted/50"
                               />
                             </div>
                             {errors.confirmPassword && (
-                              <p className="text-sm text-destructive">{errors.confirmPassword}</p>
+                              <p className="text-sm text-destructive font-medium">{errors.confirmPassword}</p>
                             )}
                           </div>
                         )}
@@ -351,13 +377,31 @@ export const Auth = () => {
                           </div>
                         )}
 
-                        <Button type="submit" className="w-full" size="lg" disabled={isLoading}>
+                        <Button type="submit" className="w-full h-11 text-base shadow-lg shadow-primary/25 bg-gradient-to-r from-primary to-primary/90 hover:shadow-xl hover:shadow-primary/40" size="lg" disabled={isLoading}>
                           {isLoading ? (
                             <LoadingSpinner size="sm" className="mr-2" />
                           ) : null}
                           {mode === 'login' ? 'Entrar' : 'Criar conta'}
                           <ArrowRight className="w-4 h-4 ml-2" />
                         </Button>
+
+                        {/* Social Login - Google */}
+                        {(mode === 'login' || mode === 'register') && (
+                          <motion.button
+                            type="button"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="w-full h-11 flex items-center justify-center gap-3 border border-border bg-card hover:bg-muted/50 rounded-lg transition-all font-medium text-sm shadow-sm hover:shadow-md"
+                          >
+                            <svg className="w-5 h-5" viewBox="0 0 24 24">
+                              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                              <path fill="#FBBC04" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                            </svg>
+                            Continuar com Google
+                          </motion.button>
+                        )}
                       </motion.form>
                     )}
                   </AnimatePresence>
@@ -365,77 +409,132 @@ export const Auth = () => {
                   {/* Divider */}
                   <div className="relative my-6">
                     <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-border" />
+                      <div className="w-full border-t border-primary/10" />
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
                       <span className="bg-card px-2 text-muted-foreground">ou continue sem conta</span>
                     </div>
                   </div>
 
-                  <Button variant="outline" asChild className="w-full">
-                    <Link to="/templates">
-                      Explorar Modelos
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </Link>
-                  </Button>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Button variant="outline" asChild className="w-full h-11 border-primary/30 hover:border-primary/60 hover:bg-primary/5">
+                      <Link to="/templates">
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        Explorar Modelos
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
+                  </motion.div>
                 </div>
 
                 {/* Right - Info Panel */}
-                <div className="bg-primary p-8 md:p-10 text-primary-foreground hidden md:flex flex-col justify-center">
+                <div className="hidden md:flex flex-col justify-between p-8 md:p-10 bg-gradient-to-br from-primary via-primary/95 to-primary/90 text-primary-foreground relative overflow-hidden">
+                  {/* Background effects */}
+                  <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl -z-10" />
+                  <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-10" />
+
+                  <div>
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      <div className="w-14 h-14 bg-white/15 rounded-2xl flex items-center justify-center mb-6 backdrop-blur-sm border border-white/20">
+                        <FileText className="w-7 h-7 text-white" />
+                      </div>
+                      <h3 className="text-3xl font-bold mb-2">
+                        {mode === 'qr' ? 'Conecte via Telemóvel' : 'Transforme seu Currículo'}
+                      </h3>
+                      <p className="text-white/70 text-lg font-light">
+                        {mode === 'qr' ? 'Sincronize com seu dispositivo' : 'Em minutos, não em horas'}
+                      </p>
+                    </motion.div>
+
+                    {mode === 'qr' ? (
+                      <motion.ol
+                        className="space-y-4 mt-8"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        {qrSteps.map((step, index) => (
+                          <motion.li
+                            key={index}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.5 + index * 0.1 }}
+                            className="flex items-start gap-4"
+                          >
+                            <span className="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-sm font-bold backdrop-blur-sm border border-white/20">
+                              {index + 1}
+                            </span>
+                            <span className="text-white/90 leading-relaxed pt-1">{step}</span>
+                          </motion.li>
+                        ))}
+                      </motion.ol>
+                    ) : (
+                      <motion.ul
+                        className="space-y-4 mt-8"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.4 }}
+                      >
+                        {[
+                          { icon: Award, text: 'Modelos aprovados por RH' },
+                          { icon: Zap, text: 'Análise inteligente com IA' },
+                          { icon: TrendingUp, text: 'Otimizado para ATS' },
+                          { icon: FileText, text: 'Exportação em múltiplos formatos' },
+                        ].map((item, i) => (
+                          <motion.li
+                            key={i}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.5 + i * 0.1 }}
+                            className="flex items-center gap-4"
+                          >
+                            <div className="p-2 bg-white/10 rounded-lg backdrop-blur-sm border border-white/10">
+                              <item.icon className="w-5 h-5 text-white" />
+                            </div>
+                            <span className="text-white/90 font-medium">{item.text}</span>
+                          </motion.li>
+                        ))}
+                      </motion.ul>
+                    )}
+                  </div>
+
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
+                    transition={{ delay: 0.8 }}
+                    className="bg-white/10 backdrop-blur-md rounded-xl p-5 border border-white/20 mt-4"
                   >
-                    <div className="w-16 h-16 bg-primary-foreground/20 rounded-2xl flex items-center justify-center mb-6">
-                      <Smartphone className="w-8 h-8" />
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="flex gap-0.5">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i} className="text-yellow-300">★</span>
+                        ))}
+                      </div>
+                      <p className="text-white font-semibold text-sm">4.9 de 5</p>
                     </div>
-                    <h3 className="text-2xl font-bold mb-4">
-                      {mode === 'qr' ? 'Conecte via Telemóvel' : 'Bem-vindo ao MeuCV'}
-                    </h3>
-
-                    {mode === 'qr' ? (
-                      <ol className="space-y-4">
-                        {qrSteps.map((step, index) => (
-                          <li key={index} className="flex items-start gap-3">
-                            <span className="flex-shrink-0 w-6 h-6 bg-primary-foreground/20 rounded-full flex items-center justify-center text-sm font-medium">
-                              {index + 1}
-                            </span>
-                            <span className="text-primary-foreground/90">{step}</span>
-                          </li>
-                        ))}
-                      </ol>
-                    ) : (
-                      <ul className="space-y-4">
-                        {[
-                          'Crie currículos profissionais em minutos',
-                          'Escolha entre modelos modernos',
-                          'Exporte em PDF de alta qualidade',
-                          'Sincronize entre dispositivos',
-                        ].map((item, i) => (
-                          <li key={i} className="flex items-center gap-3">
-                            <CheckCircle2 className="w-5 h-5 flex-shrink-0" />
-                            <span className="text-primary-foreground/90">{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    <p className="text-white/80 text-xs leading-relaxed">
+                      "Plataforma excelente para criar currículos profissionais. Muito intuitiva e eficaz." — Maria S.
+                    </p>
                   </motion.div>
                 </div>
               </div>
             </Card>
           </motion.div>
 
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            🔒 Os seus dados pessoais são encriptados de ponta a ponta
-          </p>
         </div>
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border py-4">
+      <footer className="border-t border-border/50 bg-gradient-to-r from-background via-background to-muted/30 backdrop-blur-sm py-6">
         <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-muted-foreground">Design by Marino Ricardo</p>
+          <p className="text-xs text-muted-foreground/60 mt-2">© 2024 CV Craft. Todos os direitos reservados.</p>
         </div>
       </footer>
     </div>
