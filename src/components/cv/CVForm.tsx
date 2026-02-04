@@ -24,7 +24,6 @@ import {
   useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { GripVertical } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface CVFormProps {
@@ -49,16 +48,13 @@ const SortableItem = ({ id, children }: SortableItemProps) => {
   };
 
   return (
-    <div ref={setNodeRef} style={style} className={`relative ${isDragging ? 'opacity-90' : ''}`}>
-      <div
-        {...attributes}
-        {...listeners}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full pr-2 cursor-grab active:cursor-grabbing opacity-0 hover:opacity-100 focus:opacity-100 transition-opacity z-10 hidden md:block"
-      >
-        <div className="p-1 rounded bg-muted hover:bg-accent transition-colors">
-          <GripVertical className="w-4 h-4 text-muted-foreground" />
-        </div>
-      </div>
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      className={`relative ${isDragging ? 'opacity-90 scale-[1.02]' : ''} transition-transform`}
+      {...attributes}
+      {...listeners}
+    >
       {children}
     </div>
   );
