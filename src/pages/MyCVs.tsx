@@ -148,9 +148,16 @@ export const MyCVs = () => {
       <header className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <FileText className="w-5 h-5 text-primary-foreground" />
-            </div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              className="w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-primary/25"
+            >
+              <img
+                src="https://play-lh.googleusercontent.com/z81hJTceXbEjcaqkxbOpSrG1eps7Yprf_VsBrT1wnJ1YK_vQOcFLkME5P8tozRPosA=w480-h960-rw"
+                alt="MeuCV"
+                className="w-full h-full object-cover"
+              />
+            </motion.div>
             <span className="font-bold text-xl text-foreground">MeuCV</span>
           </Link>
 

@@ -147,9 +147,13 @@ export const Landing = () => {
           <Link to="/" className="flex items-center gap-2">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="w-9 h-9 bg-gradient-to-br from-primary to-primary/80 rounded-xl flex items-center justify-center shadow-lg shadow-primary/25"
+              className="w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-primary/25"
             >
-              <FileText className="w-5 h-5 text-primary-foreground" />
+              <img
+                src="https://play-lh.googleusercontent.com/z81hJTceXbEjcaqkxbOpSrG1eps7Yprf_VsBrT1wnJ1YK_vQOcFLkME5P8tozRPosA=w480-h960-rw"
+                alt="MeuCV"
+                className="w-full h-full object-cover"
+              />
             </motion.div>
             <span className="font-bold text-xl text-foreground">MeuCV</span>
           </Link>
@@ -193,7 +197,7 @@ export const Landing = () => {
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/20 rounded-full blur-3xl" />
         <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl" />
-        
+
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
             <motion.div
@@ -343,7 +347,7 @@ export const Landing = () => {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* CV Preview */}
                   <div className="bg-white dark:bg-card rounded-xl shadow-xl p-6 border">
                     <div className="border-l-4 border-primary pl-4 mb-4">
@@ -431,7 +435,7 @@ export const Landing = () => {
                       Já tem um CV? Analise com IA!
                     </h2>
                     <p className="text-muted-foreground mb-6 text-lg">
-                      Carregue o seu currículo atual e receba uma análise completa com pontuação ATS, 
+                      Carregue o seu currículo atual e receba uma análise completa com pontuação ATS,
                       compatibilidade com sistemas de recrutamento e sugestões de melhoria.
                     </p>
                     <Button size="lg" asChild className="shadow-lg shadow-primary/25">
@@ -443,7 +447,7 @@ export const Landing = () => {
                   </div>
                   <div className="hidden md:flex justify-center">
                     <div className="relative">
-                      <motion.div 
+                      <motion.div
                         className="w-56 h-72 bg-card rounded-2xl shadow-2xl border border-border p-6"
                         animate={{ y: [0, -8, 0] }}
                         transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
@@ -600,13 +604,13 @@ export const Landing = () => {
                   <CardContent className="p-8">
                     <h3 className="text-xl font-bold text-foreground mb-2">{plan.name}</h3>
                     <p className="text-muted-foreground text-sm mb-6">{plan.description}</p>
-                    
+
                     <div className="mb-6">
                       <span className="text-4xl font-bold text-foreground">{plan.price}</span>
                       <span className="text-muted-foreground ml-1">MZN{plan.period}</span>
                     </div>
 
-                    <Button 
+                    <Button
                       className={`w-full mb-6 ${plan.popular ? 'shadow-lg shadow-primary/25' : ''}`}
                       variant={plan.popular ? 'default' : 'outline'}
                       asChild

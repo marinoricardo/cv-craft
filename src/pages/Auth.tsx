@@ -132,11 +132,15 @@ export const Auth = () => {
           <Link to="/" className="flex items-center gap-2 group">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="w-8 h-8 bg-gradient-to-br from-primary to-primary/80 rounded-lg flex items-center justify-center shadow-lg shadow-primary/25"
+              className="w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-primary/25"
             >
-              <FileText className="w-5 h-5 text-primary-foreground" />
+              <img
+                src="https://play-lh.googleusercontent.com/z81hJTceXbEjcaqkxbOpSrG1eps7Yprf_VsBrT1wnJ1YK_vQOcFLkME5P8tozRPosA=w480-h960-rw"
+                alt="MeuCV"
+                className="w-full h-full object-cover"
+              />
             </motion.div>
-            <span className="font-bold text-xl text-foreground group-hover:text-primary transition-colors">MeuCV</span>
+            <span className="font-bold text-xl text-foreground">MeuCV</span>
           </Link>
           <ThemeToggle />
         </div>
