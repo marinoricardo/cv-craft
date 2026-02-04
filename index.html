@@ -1,60 +1,109 @@
 <!doctype html>
 <html lang="pt-MZ">
-
 <head>
+  <!-- ============================= -->
+  <!-- Básico -->
+  <!-- ============================= -->
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ============================= -->
-  <link rel="icon" type="image/x-icon" href="https://play-lh.googleusercontent.com/z81hJTceXbEjcaqkxbOpSrG1eps7Yprf_VsBrT1wnJ1YK_vQOcFLkME5P8tozRPosA=w480-h960-rw">
+  <title>MeuCV – Crie o seu currículo profissional online em minutos</title>
 
-  <!-- SEO Básico -->
-  <!-- ============================= -->
-  <title>MeuCV - O Currículo Perfeito Começa Aqui</title>
   <meta name="description"
-    content="Crie o seu currículo profissional de forma rápida e moderna com MeuCV. Templates personalizáveis e exportação em PDF." />
+        content="Crie currículos profissionais modernos com o MeuCV. Templates personalizáveis, exportação em PDF e pronto para o mercado de trabalho em Moçambique e países lusófonos." />
+
   <meta name="author" content="MeuCV" />
-  <meta name="keywords" content="currículo, CV, emprego, templates, MeuCV, Portugal, Mozambique, profissional" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://meucv.app/" />
 
   <!-- ============================= -->
-  <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
+  <!-- SEO Keywords (secundário) -->
   <!-- ============================= -->
-  <meta property="og:title" content="MeuCV - O Currículo Perfeito Começa Aqui" />
+  <meta name="keywords"
+        content="criar currículo online, gerador de currículo, currículo profissional, CV moderno, currículo em PDF, MeuCV, emprego Moçambique, currículo Portugal, criar CV grátis" />
+
+  <!-- ============================= -->
+  <!-- Open Graph (WhatsApp, Facebook, LinkedIn) -->
+  <!-- ============================= -->
+  <meta property="og:title" content="MeuCV – Crie o seu currículo profissional online" />
   <meta property="og:description"
-    content="Crie o seu currículo profissional de forma rápida e moderna com MeuCV. Templates personalizáveis e exportação em PDF." />
+        content="Crie currículos modernos e profissionais com templates personalizáveis e exportação em PDF." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://meucv.app/" />
   <meta property="og:image" content="https://meucv.app/assets/og-image.png" />
+  <meta property="og:site_name" content="MeuCV" />
+  <meta property="og:locale" content="pt_MZ" />
 
   <!-- ============================= -->
-  <!-- Twitter Cards -->
+  <!-- Twitter Card -->
   <!-- ============================= -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="MeuCV - O Currículo Perfeito Começa Aqui" />
+  <meta name="twitter:title" content="MeuCV – Crie o seu currículo profissional online" />
   <meta name="twitter:description"
-    content="Crie o seu currículo profissional de forma rápida e moderna com MeuCV. Templates personalizáveis e exportação em PDF." />
+        content="Crie currículos modernos e profissionais com exportação em PDF usando o MeuCV." />
   <meta name="twitter:image" content="https://meucv.app/assets/og-image.png" />
   <meta name="twitter:site" content="@MeuCVApp" />
 
   <!-- ============================= -->
-  <!-- Favicon e ícones -->
+  <!-- Favicon & App Icons -->
   <!-- ============================= -->
-  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png"
+        href="https://play-lh.googleusercontent.com/z81hJTceXbEjcaqkxbOpSrG1eps7Yprf_VsBrT1wnJ1YK_vQOcFLkME5P8tozRPosA=w480-h960-rw">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
 
   <!-- ============================= -->
-  <!-- Melhorias adicionais -->
+  <!-- Performance -->
   <!-- ============================= -->
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- ============================= -->
+  <!-- Tema -->
+  <!-- ============================= -->
   <meta name="theme-color" content="#544A9F" />
 
+  <!-- ============================= -->
+  <!-- Dados Estruturados (Schema.org) -->
+  <!-- ============================= -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "MeuCV",
+    "url": "https://meucv.app/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Aplicação online para criação de currículos profissionais modernos com exportação em PDF.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "MZN"
+    }
+  }
+  </script>
 </head>
 
 <body>
+  <!-- ============================= -->
+  <!-- Conteúdo mínimo para SEO (fallback) -->
+  <!-- ============================= -->
+  <noscript>
+    <h1>MeuCV – Crie o seu currículo profissional online</h1>
+    <p>
+      O MeuCV permite criar currículos profissionais modernos com templates personalizáveis
+      e exportação em PDF, ideal para o mercado de trabalho em Moçambique e países lusófonos.
+    </p>
+  </noscript>
+
+  <!-- ============================= -->
+  <!-- React Root -->
+  <!-- ============================= -->
   <div id="root"></div>
+
+  <!-- ============================= -->
+  <!-- App -->
+  <!-- ============================= -->
   <script type="module" src="/src/main.tsx"></script>
 </body>
-
 </html>
