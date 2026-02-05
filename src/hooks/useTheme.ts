@@ -7,9 +7,10 @@ export const useTheme = () => {
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('meucv_theme') as Theme;
       if (stored) return stored;
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      // Dark mode como padrão
+      return 'dark';
     }
-    return 'light';
+    return 'dark';
   });
 
   useEffect(() => {

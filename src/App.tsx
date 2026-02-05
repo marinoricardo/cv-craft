@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -9,9 +10,24 @@ import Templates from "./pages/Templates";
 import MyCVs from "./pages/MyCVs";
 import Builder from "./pages/Builder";
 import CVAnalysis from "./pages/CVAnalysis";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+// Inicializar tema dark como padrão
+const initTheme = () => {
+  const stored = localStorage.getItem('meucv_theme');
+  if (!stored) {
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('meucv_theme', 'dark');
+  } else {
+    document.documentElement.classList.add(stored);
+  }
+};
+
+initTheme();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -26,6 +42,8 @@ const App = () => (
           <Route path="/my-cvs" element={<MyCVs />} />
           <Route path="/builder" element={<Builder />} />
           <Route path="/cv-analysis" element={<CVAnalysis />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

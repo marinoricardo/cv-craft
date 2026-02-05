@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { AppHeader } from '@/components/layout/AppHeader';
+import { AppFooter } from '@/components/layout/AppFooter';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +24,6 @@ import {
   Clock,
   Search,
   FolderOpen,
-  Upload,
 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 
@@ -143,51 +143,12 @@ export const MyCVs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2">
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              className="w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-primary/25"
-            >
-              <img
-                src="https://play-lh.googleusercontent.com/z81hJTceXbEjcaqkxbOpSrG1eps7Yprf_VsBrT1wnJ1YK_vQOcFLkME5P8tozRPosA=w480-h960-rw"
-                alt="MeuCV"
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-            <span className="font-bold text-xl text-foreground">MeuCV</span>
-          </Link>
-
-          <nav className="flex items-center gap-4">
-            <Link
-              to="/cv-analysis"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm hidden md:flex items-center gap-1"
-            >
-              <Upload className="w-4 h-4" />
-              Analisar CV
-            </Link>
-            <Link
-              to="/templates"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm hidden md:block"
-            >
-              Modelos
-            </Link>
-            <ThemeToggle />
-            <Button asChild>
-              <Link to="/templates">
-                <Plus className="w-4 h-4 mr-2" />
-                Novo CV
-              </Link>
-            </Button>
-          </nav>
-        </div>
-      </header>
+      <AppHeader showAnalyzeCV showTemplates showNewCV />
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
+      <main className="flex-1 container mx-auto px-4 py-8 pt-24">
         <div className="max-w-5xl mx-auto">
           {/* Page Header */}
           <motion.div
@@ -265,7 +226,7 @@ export const MyCVs = () => {
                     >
                       <CardContent className="p-0">
                         {/* CV Preview Thumbnail */}
-                        <div className="aspect-[3/4] bg-[hsl(var(--cv-preview-bg))] p-3 relative overflow-hidden">
+                        <div className="aspect-[3/3.5] bg-[hsl(var(--cv-preview-bg))] p-3 relative overflow-hidden">
                           {!cv.isComplete && (
                             <Badge variant="secondary" className="absolute top-2 right-2 text-xs z-10">
                               Rascunho
@@ -391,12 +352,7 @@ export const MyCVs = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border py-6 mt-12">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-muted-foreground">Design by Marino Ricardo</p>
-        </div>
-      </footer>
+      <AppFooter />
     </div>
   );
 };

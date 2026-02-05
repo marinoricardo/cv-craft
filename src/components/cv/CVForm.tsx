@@ -99,6 +99,8 @@ export const CVForm = ({ cvData, onChange }: CVFormProps) => {
         <PersonalDataSection
           data={cvData.personalData}
           onChange={(personalData) => onChange({ ...cvData, personalData })}
+          photo={(cvData as any).photo}
+          onPhotoChange={(photo) => onChange({ ...cvData, photo } as any)}
         />
       ),
       profile: (
@@ -142,10 +144,6 @@ export const CVForm = ({ cvData, onChange }: CVFormProps) => {
       className="space-y-4"
     >
       <CVProgress cvData={cvData} />
-
-      <div className="text-xs text-muted-foreground text-center mb-2 hidden md:block">
-        💡 Arraste as secções para reordenar
-      </div>
 
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
         <SortableContext items={sectionOrder} strategy={verticalListSortingStrategy}>
