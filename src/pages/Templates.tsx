@@ -4,10 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ThemeToggle } from '@/components/ThemeToggle';
+import { AppHeader } from '@/components/layout/AppHeader';
+import { AppFooter } from '@/components/layout/AppFooter';
 import {
-  FileText,
-  ArrowLeft,
   Check,
   Sparkles,
   Star,
@@ -107,51 +106,12 @@ export const Templates = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background overflow-hidden">
+    <div className="min-h-screen bg-background overflow-hidden flex flex-col">
       {/* Header */}
-      <header className="border-b border-border bg-card/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" asChild>
-              <Link to="/">
-                <ArrowLeft className="w-5 h-5" />
-              </Link>
-            </Button>
-            <Link to="/" className="flex items-center gap-2">
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="w-9 h-9 rounded-xl overflow-hidden shadow-lg shadow-primary/25"
-              >
-                <img
-                  src="https://play-lh.googleusercontent.com/z81hJTceXbEjcaqkxbOpSrG1eps7Yprf_VsBrT1wnJ1YK_vQOcFLkME5P8tozRPosA=w480-h960-rw"
-                  alt="MeuCV"
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-              <span className="font-bold text-xl text-foreground">MeuCV</span>
-            </Link>
-          </div>
-
-          <nav className="flex items-center gap-4">
-            <Link
-              to="/my-cvs"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm hidden md:block"
-            >
-              Meus CVs
-            </Link>
-            <Link
-              to="/auth"
-              className="text-muted-foreground hover:text-foreground transition-colors text-sm hidden md:block"
-            >
-              Entrar
-            </Link>
-            <ThemeToggle />
-          </nav>
-        </div>
-      </header>
+      <AppHeader showBackButton backTo="/" showMyCVs showAuth />
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-12 pt-20 relative overflow-hidden min-h-screen">
+      <main className="flex-1 container mx-auto px-4 py-12 pt-24 relative overflow-hidden">
         {/* Background Effects - Full coverage */}
         <div className="fixed inset-0 bg-gradient-to-b from-background via-background to-muted/20 -z-20" />
         <div className="fixed -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-20" />
@@ -232,7 +192,7 @@ export const Templates = () => {
                   >
                     <CardContent className="p-0">
                       {/* Template Preview */}
-                      <div className="aspect-[4/5] bg-gradient-to-br from-white dark:from-card to-muted/10 p-3 relative overflow-hidden">
+                      <div className="aspect-[4/4.5] bg-gradient-to-br from-white dark:from-card to-muted/10 p-3 relative overflow-hidden">
                         {/* Badges */}
                         <motion.div
                           className="absolute top-2 right-2 flex gap-1 z-10"
@@ -355,14 +315,7 @@ export const Templates = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border py-8 bg-gradient-to-b from-background via-background to-muted/40 relative z-10">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-muted-foreground">
-            © 2024 MeuCV. Design by Marino Ricardo.
-          </p>
-        </div>
-      </footer>
+      <AppFooter />
     </div>
   );
 };

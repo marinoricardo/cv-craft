@@ -1,8 +1,9 @@
 import { CVData } from '@/types/cv';
-import { Mail, Phone, MapPin, Linkedin, Globe } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Globe, User } from 'lucide-react';
 
 interface CVPreviewProps {
   cvData: CVData;
+  photo?: string;
 }
 
 const levelLabels = {
@@ -22,11 +23,11 @@ const formatDate = (dateStr: string) => {
   return `${months[parseInt(month) - 1]} ${year}`;
 };
 
-export const CVPreview = ({ cvData }: CVPreviewProps) => {
+export const CVPreview = ({ cvData, photo }: CVPreviewProps) => {
   const { personalData, professionalProfile, experiences, education, skills, languages } = cvData;
 
   const hasContent = personalData.fullName || personalData.email || professionalProfile.summary || 
-    experiences.length > 0 || education.length > 0 || skills.length > 0 || languages.length > 0;
+    experiences.length > 0 || education.length > 0 || skills.length > 0 || languages.length > 0 || photo;
 
   return (
     <div className="bg-muted/50 rounded-2xl p-6 border border-border">
@@ -55,17 +56,27 @@ export const CVPreview = ({ cvData }: CVPreviewProps) => {
           ) : (
             <div className="space-y-5 text-sm">
               {/* Header */}
-              {(personalData.fullName || personalData.email) && (
+              {(personalData.fullName || personalData.email || photo) && (
                 <div className="pb-4 border-b-2 border-primary/20">
-                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-1 tracking-tight">
-                    {personalData.fullName || 'O seu nome'}
-                  </h1>
-                  {professionalProfile.summary && (
-                    <p className="text-primary font-medium text-sm mb-3">
-                      {professionalProfile.summary.split('.')[0]}
-                    </p>
-                  )}
-                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground">
+                  <div className="flex items-start gap-4">
+                    {/* Photo */}
+                    {photo && (
+                      <div className="w-16 h-16 rounded-lg overflow-hidden border-2 border-primary/30 flex-shrink-0">
+                        <img src={photo} alt="Foto" className="w-full h-full object-cover" />
+                      </div>
+                    )}
+                    <div className="flex-1">
+                      <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-1 tracking-tight">
+                        {personalData.fullName || 'O seu nome'}
+                      </h1>
+                      {professionalProfile.summary && (
+                        <p className="text-primary font-medium text-sm mb-3">
+                          {professionalProfile.summary.split('.')[0]}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-x-4 gap-y-1.5 text-xs text-muted-foreground mt-3">
                     {personalData.email && (
                       <span className="flex items-center gap-1.5">
                         <Mail className="w-3.5 h-3.5 text-primary/70" />
