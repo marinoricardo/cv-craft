@@ -157,6 +157,11 @@
   .input-focused {
     @apply ring-2 ring-primary/20 border-primary;
   }
+  
+  /* Safe area for mobile bottom nav */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
 }
 
 @layer utilities {

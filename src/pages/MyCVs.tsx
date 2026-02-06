@@ -148,7 +148,7 @@ export const MyCVs = () => {
       <AppHeader showAnalyzeCV showTemplates showNewCV />
 
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-8 pt-24">
+      <main className="flex-1 container mx-auto px-4 py-8 pt-24 pb-24 md:pb-8">
         <div className="max-w-5xl mx-auto">
           {/* Page Header */}
           <motion.div
