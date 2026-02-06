@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <!-- Página inicial -->
+    <url>
+        <loc>https://vagas.meucv.app/</loc>
+        <lastmod>2026-02-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+
+    <!-- Lista de vagas -->
+    <url>
+        <loc>https://vagas.meucv.app/vagas</loc>
+        <lastmod>2026-02-06</lastmod>
+        <changefreq>hourly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <!-- Blog -->
+    <url>
+        <loc>https://vagas.meucv.app/blog</loc>
+        <lastmod>2026-02-06</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Posts individuais do blog -->
+    <url>
+        <loc>https://vagas.meucv.app/blog/como-preparar-cv-destaca-mercado-mocambicano</loc>
+        <lastmod>2026-02-05</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vagas.meucv.app/blog/10-competencias-mais-procuradas-2024</loc>
+        <lastmod>2026-02-05</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <url>
+        <loc>https://vagas.meucv.app/blog/sector-tecnologico-mocambique-mercado-expansao</loc>
+        <lastmod>2026-02-05</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Vagas individuais -->
+    <url>
+        <loc>https://vagas.meucv.app/vaga/analista-marketing-digital-cdm</loc>
+        <lastmod>2026-02-05</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Sobre / Contacto (se existirem) -->
+    <url>
+        <loc>https://vagas.meucv.app/sobre</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+    <url>
+        <loc>https://vagas.meucv.app/contacto</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.4</priority>
+    </url>
+
+</urlset>
