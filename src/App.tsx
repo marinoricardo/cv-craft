@@ -13,6 +13,9 @@ import CVAnalysis from "./pages/CVAnalysis";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
 import NotFound from "./pages/NotFound";
+import { BottomNav } from "./components/navigation/BottomNav";
+import { FloatingActionButton } from "./components/navigation/FloatingActionButton";
+import { OnboardingTour } from "./components/feedback/OnboardingTour";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +38,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <OnboardingTour />
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/auth" element={<Auth />} />
@@ -47,6 +51,8 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <BottomNav />
+        <FloatingActionButton />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

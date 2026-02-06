@@ -147,7 +147,7 @@ export const Auth = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 flex items-center justify-center p-4 relative z-10">
+      <main className="flex-1 flex items-center justify-center p-4 pb-24 md:pb-4 relative z-10">
         <div className="w-full max-w-5xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

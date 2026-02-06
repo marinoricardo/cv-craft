@@ -111,7 +111,7 @@ export const Templates = () => {
       <AppHeader showBackButton backTo="/" showMyCVs showAuth />
 
       {/* Main Content */}
-      <main className="flex-1 container mx-auto px-4 py-12 pt-24 relative overflow-hidden">
+      <main className="flex-1 container mx-auto px-4 py-12 pt-24 pb-24 md:pb-12 relative overflow-hidden">
         {/* Background Effects - Full coverage */}
         <div className="fixed inset-0 bg-gradient-to-b from-background via-background to-muted/20 -z-20" />
         <div className="fixed -top-40 -left-40 w-96 h-96 bg-primary/10 rounded-full blur-3xl -z-20" />
