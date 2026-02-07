@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { ArrowLeft, Plus, Upload } from 'lucide-react';
+import { ArrowLeft, Plus, Upload, Globe } from 'lucide-react';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 interface AppHeaderProps {
   showBackButton?: boolean;
@@ -25,6 +26,8 @@ export const AppHeader = ({
   showMyCVs = false,
   children,
 }: AppHeaderProps) => {
+  const { t, language, toggleLanguage } = useLanguage();
+
   return (
     <header className="border-b border-border bg-card/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
@@ -58,7 +61,7 @@ export const AppHeader = ({
               className="text-muted-foreground hover:text-foreground transition-colors text-sm hidden md:flex items-center gap-1.5"
             >
               <Upload className="w-4 h-4" />
-              Analisar CV
+              {t.common.analyzeCV}
             </Link>
           )}
           {showTemplates && (
@@ -66,7 +69,7 @@ export const AppHeader = ({
               to="/templates"
               className="text-muted-foreground hover:text-foreground transition-colors text-sm hidden md:block"
             >
-              Modelos
+              {t.common.templates}
             </Link>
           )}
           {showMyCVs && (
@@ -74,7 +77,7 @@ export const AppHeader = ({
               to="/my-cvs"
               className="text-muted-foreground hover:text-foreground transition-colors text-sm hidden md:block"
             >
-              Meus CVs
+              {t.common.myCVs}
             </Link>
           )}
           {showAuth && (
@@ -82,15 +85,26 @@ export const AppHeader = ({
               to="/auth"
               className="text-muted-foreground hover:text-foreground transition-colors text-sm hidden md:block"
             >
-              Entrar
+              {t.common.login}
             </Link>
           )}
+
+          {/* Language Toggle */}
+          <button
+            onClick={toggleLanguage}
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            title={language === 'pt' ? 'Switch to English' : 'Mudar para Português'}
+          >
+            <Globe className="w-4 h-4" />
+            <span className="uppercase">{language === 'pt' ? 'EN' : 'PT'}</span>
+          </button>
+
           <ThemeToggle />
           {showNewCV && (
             <Button asChild size="sm">
               <Link to="/templates">
                 <Plus className="w-4 h-4 mr-1.5" />
-                Novo CV
+                {t.common.newCV}
               </Link>
             </Button>
           )}

@@ -1,17 +1,19 @@
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Plus, X, FileText, Upload, Sparkles } from 'lucide-react';
+import { Plus, X, FileText, Upload } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
-
-const fabActions = [
-  { icon: FileText, label: 'Novo CV', path: '/templates', color: 'bg-primary' },
-  { icon: Upload, label: 'Analisar CV', path: '/cv-analysis', color: 'bg-green-600' },
-];
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export const FloatingActionButton = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const fabActions = [
+    { icon: FileText, label: t.fab.newCV, path: '/templates', color: 'bg-primary' },
+    { icon: Upload, label: t.fab.analyzeCV, path: '/cv-analysis', color: 'bg-green-600' },
+  ];
 
   // Don't show on builder or landing page
   if (location.pathname === '/builder' || location.pathname === '/') return null;

@@ -2,17 +2,17 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import { AnimatedCard } from '@/components/AnimatedCard';
 import { Badge } from '@/components/ui/badge';
+import { Globe } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
+import { useLanguage } from '@/i18n/LanguageContext';
 import {
   FileText,
   Zap,
   Download,
   Sparkles,
-  CheckCircle2,
   ArrowRight,
-  Globe,
   Smartphone,
   Shield,
   Star,
@@ -23,122 +23,13 @@ import {
   Crown,
 } from 'lucide-react';
 
-const features = [
-  {
-    icon: Zap,
-    title: 'Rápido e Fácil',
-    description: 'Crie seu currículo profissional em menos de 10 minutos, sem complicações.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Análise com IA',
-    description: 'Receba pontuação ATS e sugestões personalizadas para otimizar o seu CV.',
-  },
-  {
-    icon: Download,
-    title: 'Exportar PDF',
-    description: 'Baixe seu currículo em PDF de alta qualidade, pronto para enviar.',
-  },
-  {
-    icon: Globe,
-    title: 'Modelos Profissionais',
-    description: 'Escolha entre vários templates modernos e elegantes.',
-  },
-  {
-    icon: Smartphone,
-    title: 'Acesse em Qualquer Lugar',
-    description: 'Continue de onde parou, no computador ou no celular.',
-  },
-  {
-    icon: Shield,
-    title: 'Seus Dados Seguros',
-    description: 'Suas informações são protegidas e nunca compartilhadas.',
-  },
-];
-
-const steps = [
-  { number: '01', title: 'Escolha um Modelo', description: 'Selecione entre nossos templates profissionais', icon: FileText },
-  { number: '02', title: 'Preencha seus Dados', description: 'Adicione suas experiências e competências', icon: Users },
-  { number: '03', title: 'Exporte em PDF', description: 'Baixe e envie para as empresas', icon: Download },
-];
-
-const testimonials = [
-  {
-    name: 'Maria Santos',
-    role: 'Designer UX • Maputo',
-    content: 'Consegui meu emprego dos sonhos graças ao currículo que criei aqui. A análise de IA foi fundamental!',
-    rating: 5,
-  },
-  {
-    name: 'João Silva',
-    role: 'Desenvolvedor • Beira',
-    content: 'Simples, rápido e profissional. Em 15 minutos tinha um CV perfeito.',
-    rating: 5,
-  },
-  {
-    name: 'Ana Oliveira',
-    role: 'Marketing Digital • Nampula',
-    content: 'Os modelos são lindos e a exportação em PDF fica impecável.',
-    rating: 5,
-  },
-];
-
-const stats = [
-  { value: '50K+', label: 'Currículos Criados' },
-  { value: '92%', label: 'Taxa de Sucesso' },
-  { value: '4.9', label: 'Avaliação Média', hasStar: true },
-];
-
-const pricingPlans = [
-  {
-    name: 'Gratuito',
-    price: '0',
-    period: 'para sempre',
-    description: 'Perfeito para começar',
-    features: [
-      'Criar 1 currículo',
-      'Modelos básicos',
-      'Exportar PDF',
-      'Análise básica de IA',
-    ],
-    cta: 'Começar Grátis',
-    popular: false,
-  },
-  {
-    name: 'Profissional',
-    price: '499',
-    period: '/mês',
-    description: 'Para quem busca emprego ativamente',
-    features: [
-      'Currículos ilimitados',
-      'Todos os modelos premium',
-      'Exportar PDF ilimitado',
-      'Análise completa de IA',
-      'Sugestões personalizadas',
-      'Remover marca d\'água',
-    ],
-    cta: 'Começar Agora',
-    popular: true,
-  },
-  {
-    name: 'Empresarial',
-    price: '1.999',
-    period: '/mês',
-    description: 'Para recrutadores e empresas',
-    features: [
-      'Tudo do Profissional',
-      'Múltiplos utilizadores',
-      'Painel administrativo',
-      'API de integração',
-      'Suporte prioritário',
-      'Relatórios avançados',
-    ],
-    cta: 'Falar com Vendas',
-    popular: false,
-  },
-];
+const featureIcons = [Zap, Sparkles, Download, Smartphone, Smartphone, Shield];
+const stepIcons = [FileText, Users, Download];
 
 export const Landing = () => {
+  const { t, language, toggleLanguage } = useLanguage();
+  const l = t.landing;
+
   return (
     <div className="min-h-screen bg-background overflow-hidden">
       {/* Header */}
@@ -160,30 +51,44 @@ export const Landing = () => {
 
           <nav className="hidden md:flex items-center gap-6">
             <Link to="/templates" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Modelos
+              {t.common.templates}
             </Link>
             <Link to="/cv-analysis" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Analisar CV
+              {t.common.analyzeCV}
             </Link>
             <a href="#pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Preços
+              {t.common.prices}
             </a>
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              <Globe className="w-4 h-4" />
+              <span className="uppercase">{language === 'pt' ? 'EN' : 'PT'}</span>
+            </button>
             <ThemeToggle />
             <Button variant="ghost" asChild>
-              <Link to="/auth">Entrar</Link>
+              <Link to="/auth">{t.common.login}</Link>
             </Button>
             <Button asChild className="shadow-lg shadow-primary/25">
               <Link to="/templates">
-                Criar Currículo
+                {t.common.createCV}
                 <ArrowRight className="w-4 h-4 ml-1" />
               </Link>
             </Button>
           </nav>
 
           <div className="md:hidden flex items-center gap-2">
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1 px-2 py-1.5 rounded-lg text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            >
+              <Globe className="w-4 h-4" />
+              <span className="uppercase">{language === 'pt' ? 'EN' : 'PT'}</span>
+            </button>
             <ThemeToggle />
             <Button asChild size="sm">
-              <Link to="/templates">Começar</Link>
+              <Link to="/templates">{t.common.start}</Link>
             </Button>
           </div>
         </div>
@@ -191,12 +96,10 @@ export const Landing = () => {
 
       {/* Hero Section */}
       <section className="relative pt-24 pb-20 md:pt-40 md:pb-20 overflow-hidden">
-        {/* Background Effects */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background via-80% to-accent/30" />
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-primary/15 rounded-full blur-3xl" />
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/20 rounded-full blur-3xl" />
         <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 right-1/4 w-64 h-64 bg-purple-500/5 rounded-full blur-3xl" />
 
         <div className="container mx-auto px-4 relative">
           <div className="max-w-4xl mx-auto text-center">
@@ -206,7 +109,7 @@ export const Landing = () => {
               className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 border border-primary/20"
             >
               <Sparkles className="w-4 h-4" />
-              Agora com Inteligência Artificial
+              {l.heroTag}
             </motion.div>
 
             <motion.h1
@@ -215,8 +118,8 @@ export const Landing = () => {
               transition={{ delay: 0.1 }}
               className="text-4xl md:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight tracking-tight"
             >
-              O Currículo Perfeito{' '}
-              <span className="text-primary">Começa Aqui</span>
+              {l.heroTitle}{' '}
+              <span className="text-primary">{l.heroTitleHighlight}</span>
             </motion.h1>
 
             <motion.p
@@ -225,7 +128,7 @@ export const Landing = () => {
               transition={{ delay: 0.2 }}
               className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed"
             >
-              Crie currículos profissionais em minutos. Analise com IA e destaque-se nas candidaturas com templates modernos.
+              {l.heroDescription}
             </motion.p>
 
             <motion.div
@@ -236,14 +139,14 @@ export const Landing = () => {
             >
               <Button size="lg" asChild className="text-base h-14 px-8 shadow-xl shadow-primary/25">
                 <Link to="/templates">
-                  Criar Currículo Grátis
+                  {l.ctaCreate}
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Link>
               </Button>
               <Button size="lg" variant="outline" asChild className="text-base h-14 px-8">
                 <Link to="/cv-analysis">
                   <Upload className="w-5 h-5 mr-2" />
-                  Analisar Meu CV
+                  {l.ctaAnalyze}
                 </Link>
               </Button>
             </motion.div>
@@ -254,24 +157,14 @@ export const Landing = () => {
               transition={{ delay: 0.4 }}
               className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 mt-10 text-sm text-muted-foreground"
             >
-              <span className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <Check className="w-3 h-3 text-green-600" />
-                </div>
-                Sem cartão de crédito
-              </span>
-              <span className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <Check className="w-3 h-3 text-green-600" />
-                </div>
-                100% gratuito para começar
-              </span>
-              <span className="flex items-center gap-2">
-                <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
-                  <Check className="w-3 h-3 text-green-600" />
-                </div>
-                Pronto em minutos
-              </span>
+              {[l.noCreditCard, l.freeToStart, l.readyInMinutes].map((text, i) => (
+                <span key={i} className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <Check className="w-3 h-3 text-green-600" />
+                  </div>
+                  {text}
+                </span>
+              ))}
             </motion.div>
           </div>
 
@@ -282,7 +175,11 @@ export const Landing = () => {
             transition={{ delay: 0.5 }}
             className="grid grid-cols-3 gap-4 max-w-xl mx-auto mt-16"
           >
-            {stats.map((stat, i) => (
+            {[
+              { value: '50K+', label: l.cvsCreated },
+              { value: '92%', label: l.successRate },
+              { value: '4.9', label: l.avgRating, hasStar: true },
+            ].map((stat, i) => (
               <div key={i} className="text-center p-4 rounded-2xl bg-card/50 backdrop-blur border border-border/50">
                 <div className="flex items-center justify-center gap-1 text-2xl md:text-3xl font-bold text-foreground">
                   {stat.value}
@@ -313,18 +210,17 @@ export const Landing = () => {
                   <div className="w-3 h-3 rounded-full bg-yellow-400" />
                   <div className="w-3 h-3 rounded-full bg-green-400" />
                 </div>
-                <span className="text-sm text-muted-foreground font-medium">MeuCV Editor</span>
+                <span className="text-sm text-muted-foreground font-medium">{l.editorPreview}</span>
               </div>
               <div className="p-8 md:p-12 bg-gradient-to-br from-muted/30 to-background">
                 <div className="grid md:grid-cols-2 gap-8 items-center">
-                  {/* Form Preview */}
                   <div className="space-y-4">
                     <div className="bg-card p-4 rounded-xl border border-border">
                       <div className="flex items-center gap-3 mb-3">
                         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                           <Users className="w-4 h-4 text-primary" />
                         </div>
-                        <span className="font-medium text-sm">Dados Pessoais</span>
+                        <span className="font-medium text-sm">{l.personalData}</span>
                       </div>
                       <div className="space-y-2">
                         <div className="h-8 bg-muted rounded-lg" />
@@ -339,7 +235,7 @@ export const Landing = () => {
                         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
                           <TrendingUp className="w-4 h-4 text-primary" />
                         </div>
-                        <span className="font-medium text-sm">Experiência</span>
+                        <span className="font-medium text-sm">{l.experience}</span>
                       </div>
                       <div className="space-y-2">
                         <div className="h-8 bg-muted rounded-lg" />
@@ -348,7 +244,6 @@ export const Landing = () => {
                     </div>
                   </div>
 
-                  {/* CV Preview */}
                   <div className="bg-white dark:bg-card rounded-xl shadow-xl p-6 border">
                     <div className="border-l-4 border-primary pl-4 mb-4">
                       <h3 className="font-bold text-lg text-foreground">João Silva</h3>
@@ -361,7 +256,7 @@ export const Landing = () => {
                         <div className="h-2 bg-muted rounded w-4/5" />
                       </div>
                       <div className="pt-3 border-t border-border">
-                        <p className="text-xs font-semibold text-primary mb-2">EXPERIÊNCIA</p>
+                        <p className="text-xs font-semibold text-primary mb-2">{l.experience.toUpperCase()}</p>
                         <div className="space-y-1.5">
                           <div className="h-2 bg-muted rounded w-full" />
                           <div className="h-2 bg-muted rounded w-3/4" />
@@ -386,7 +281,7 @@ export const Landing = () => {
                   <TrendingUp className="w-6 h-6 text-green-600" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Pontuação ATS</p>
+                  <p className="text-xs text-muted-foreground">{l.atsScore}</p>
                   <p className="text-2xl font-bold text-foreground">92<span className="text-sm text-muted-foreground">/100</span></p>
                 </div>
               </div>
@@ -404,8 +299,8 @@ export const Landing = () => {
                   <Sparkles className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Sugestões IA</p>
-                  <p className="text-lg font-bold text-foreground">+15 melhorias</p>
+                  <p className="text-xs text-muted-foreground">{l.aiSuggestions}</p>
+                  <p className="text-lg font-bold text-foreground">+15 {l.improvements}</p>
                 </div>
               </div>
             </motion.div>
@@ -429,18 +324,17 @@ export const Landing = () => {
                   <div>
                     <Badge variant="secondary" className="mb-4 bg-primary/10 text-primary border-0">
                       <Upload className="w-3 h-3 mr-1" />
-                      Novo
+                      {l.newBadge}
                     </Badge>
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                      Já tem um CV? Analise com IA!
+                      {l.alreadyHaveCV}
                     </h2>
                     <p className="text-muted-foreground mb-6 text-lg">
-                      Carregue o seu currículo atual e receba uma análise completa com pontuação ATS,
-                      compatibilidade com sistemas de recrutamento e sugestões de melhoria.
+                      {l.alreadyHaveCVDesc}
                     </p>
                     <Button size="lg" asChild className="shadow-lg shadow-primary/25">
                       <Link to="/cv-analysis">
-                        Analisar Meu CV Grátis
+                        {l.analyzeFree}
                         <ArrowRight className="w-5 h-5 ml-2" />
                       </Link>
                     </Button>
@@ -493,17 +387,21 @@ export const Landing = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge variant="secondary" className="mb-4">Como Funciona</Badge>
+            <Badge variant="secondary" className="mb-4">{l.howItWorks}</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Como criar um currículo profissional em 3 passos
+              {l.howItWorksTitle}
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Crie o currículo perfeito em menos de 10 minutos
+              {l.howItWorksDesc}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {steps.map((step, index) => (
+            {[
+              { number: '01', title: l.step1Title, description: l.step1Desc },
+              { number: '02', title: l.step2Title, description: l.step2Desc },
+              { number: '03', title: l.step3Title, description: l.step3Desc },
+            ].map((step, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -512,7 +410,7 @@ export const Landing = () => {
                 transition={{ delay: index * 0.1 }}
                 className="text-center relative"
               >
-                {index < steps.length - 1 && (
+                {index < 2 && (
                   <div className="hidden md:block absolute top-12 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-border to-transparent" />
                 )}
                 <motion.div
@@ -538,27 +436,30 @@ export const Landing = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge variant="secondary" className="mb-4">Funcionalidades</Badge>
+            <Badge variant="secondary" className="mb-4">{l.features}</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Tudo o que Precisa para um Currículo de Sucesso
+              {l.featuresTitle}
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Ferramentas poderosas para criar currículos que impressionam
+              {l.featuresDesc}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto relative z-10">
-            {features.map((feature, index) => (
-              <AnimatedCard key={index} delay={index * 0.05} className="border-primary/20 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20 transition-all bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
-                <CardContent className="p-6">
-                  <div className="w-14 h-14 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/15 flex items-center justify-center mb-4 rounded-2xl border border-primary/20">
-                    <feature.icon className="w-7 h-7 text-primary" />
-                  </div>
-                  <h3 className="font-bold text-lg text-foreground mb-2">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.description}</p>
-                </CardContent>
-              </AnimatedCard>
-            ))}
+            {l.featuresList.map((feature, index) => {
+              const Icon = featureIcons[index] || Zap;
+              return (
+                <AnimatedCard key={index} delay={index * 0.05} className="border-primary/20 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/20 transition-all bg-gradient-to-br from-card to-card/80 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="w-14 h-14 bg-gradient-to-br from-primary/20 via-primary/10 to-accent/15 flex items-center justify-center mb-4 rounded-2xl border border-primary/20">
+                      <Icon className="w-7 h-7 text-primary" />
+                    </div>
+                    <h3 className="font-bold text-lg text-foreground mb-2">{feature.title}</h3>
+                    <p className="text-muted-foreground">{feature.description}</p>
+                  </CardContent>
+                </AnimatedCard>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -574,64 +475,67 @@ export const Landing = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge variant="secondary" className="mb-4">Preços</Badge>
+            <Badge variant="secondary" className="mb-4">{t.common.prices}</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Planos para Todos
+              {l.pricingTitle}
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Comece grátis e faça upgrade quando precisar
+              {l.pricingDesc}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto relative z-10">
-            {pricingPlans.map((plan, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <Card className={`h-full relative overflow-hidden backdrop-blur-sm ${plan.popular ? 'border-primary/50 shadow-2xl shadow-primary/20 bg-gradient-to-br from-primary/15 to-primary/5' : 'border-border/50 bg-gradient-to-br from-card/80 to-card/40'}`}>
-                  {plan.popular && (
-                    <div className="absolute top-0 right-0">
-                      <div className="bg-primary text-primary-foreground text-xs font-bold px-4 py-1.5 rounded-bl-lg flex items-center gap-1">
-                        <Crown className="w-3 h-3" />
-                        Popular
+            {l.plans.map((plan, index) => {
+              const isPopular = index === 1;
+              return (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Card className={`h-full relative overflow-hidden backdrop-blur-sm ${isPopular ? 'border-primary/50 shadow-2xl shadow-primary/20 bg-gradient-to-br from-primary/15 to-primary/5' : 'border-border/50 bg-gradient-to-br from-card/80 to-card/40'}`}>
+                    {isPopular && (
+                      <div className="absolute top-0 right-0">
+                        <div className="bg-primary text-primary-foreground text-xs font-bold px-4 py-1.5 rounded-bl-lg flex items-center gap-1">
+                          <Crown className="w-3 h-3" />
+                          {l.popular}
+                        </div>
                       </div>
-                    </div>
-                  )}
-                  <CardContent className="p-8">
-                    <h3 className="text-xl font-bold text-foreground mb-2">{plan.name}</h3>
-                    <p className="text-muted-foreground text-sm mb-6">{plan.description}</p>
+                    )}
+                    <CardContent className="p-8">
+                      <h3 className="text-xl font-bold text-foreground mb-2">{plan.name}</h3>
+                      <p className="text-muted-foreground text-sm mb-6">{plan.description}</p>
 
-                    <div className="mb-6">
-                      <span className="text-4xl font-bold text-foreground">{plan.price}</span>
-                      <span className="text-muted-foreground ml-1">MZN{plan.period}</span>
-                    </div>
+                      <div className="mb-6">
+                        <span className="text-4xl font-bold text-foreground">{plan.price}</span>
+                        <span className="text-muted-foreground ml-1">MZN{plan.period}</span>
+                      </div>
 
-                    <Button
-                      className={`w-full mb-6 ${plan.popular ? 'shadow-lg shadow-primary/25' : ''}`}
-                      variant={plan.popular ? 'default' : 'outline'}
-                      asChild
-                    >
-                      <Link to="/templates">{plan.cta}</Link>
-                    </Button>
+                      <Button
+                        className={`w-full mb-6 ${isPopular ? 'shadow-lg shadow-primary/25' : ''}`}
+                        variant={isPopular ? 'default' : 'outline'}
+                        asChild
+                      >
+                        <Link to="/templates">{plan.cta}</Link>
+                      </Button>
 
-                    <ul className="space-y-3">
-                      {plan.features.map((feature, i) => (
-                        <li key={i} className="flex items-start gap-3 text-sm">
-                          <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <Check className="w-3 h-3 text-green-600" />
-                          </div>
-                          <span className="text-foreground">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                      <ul className="space-y-3">
+                        {plan.features.map((feature, i) => (
+                          <li key={i} className="flex items-start gap-3 text-sm">
+                            <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                              <Check className="w-3 h-3 text-green-600" />
+                            </div>
+                            <span className="text-foreground">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -647,17 +551,17 @@ export const Landing = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <Badge variant="secondary" className="mb-4">Testemunhos</Badge>
+            <Badge variant="secondary" className="mb-4">{l.testimonialsLabel}</Badge>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              O que Dizem Sobre Nós
+              {l.testimonialsTitle}
             </h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-lg">
-              Milhares de profissionais já transformaram as suas carreiras
+              {l.testimonialsDesc}
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto relative z-10">
-            {testimonials.map((testimonial, index) => (
+            {l.testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -668,7 +572,7 @@ export const Landing = () => {
                 <Card className="h-full hover:shadow-xl hover:shadow-primary/15 transition-all bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30">
                   <CardContent className="p-6">
                     <div className="flex items-center gap-1 mb-4">
-                      {Array.from({ length: testimonial.rating }).map((_, i) => (
+                      {Array.from({ length: 5 }).map((_, i) => (
                         <Star key={i} className="w-4 h-4 text-yellow-500 fill-yellow-500" />
                       ))}
                     </div>
@@ -703,15 +607,15 @@ export const Landing = () => {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(255,255,255,0.1),transparent)]" />
             <div className="relative z-10">
               <h2 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-6">
-                Pronto para Criar seu Currículo?
+                {l.ctaTitle}
               </h2>
               <p className="text-primary-foreground/90 mb-10 max-w-xl mx-auto text-lg">
-                Junte-se a milhares de profissionais que já criaram currículos incríveis com o MeuCV.
+                {l.ctaDesc}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" variant="secondary" asChild className="text-lg h-14 px-10">
                   <Link to="/templates">
-                    Começar Agora — É Grátis
+                    {l.ctaButton}
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Link>
                 </Button>
@@ -732,12 +636,12 @@ export const Landing = () => {
               <span className="font-bold text-xl text-foreground">MeuCV</span>
             </div>
             <div className="flex flex-col md:flex-row items-center gap-4 text-sm text-muted-foreground">
-              <Link to="/templates" className="hover:text-foreground transition-colors">Modelos</Link>
-              <Link to="/cv-analysis" className="hover:text-foreground transition-colors">Analisar CV</Link>
-              <a href="#pricing" className="hover:text-foreground transition-colors">Preços</a>
+              <Link to="/templates" className="hover:text-foreground transition-colors">{t.common.templates}</Link>
+              <Link to="/cv-analysis" className="hover:text-foreground transition-colors">{t.common.analyzeCV}</Link>
+              <a href="#pricing" className="hover:text-foreground transition-colors">{t.common.prices}</a>
             </div>
             <p className="text-sm text-muted-foreground">
-              © 2024 MeuCV. Design by Marino Ricardo.
+              © {new Date().getFullYear()} MeuCV. {t.footer.designBy}.
             </p>
           </div>
         </div>
