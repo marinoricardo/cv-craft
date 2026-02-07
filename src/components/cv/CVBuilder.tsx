@@ -3,22 +3,22 @@ import { motion } from 'framer-motion';
 import { CVData, defaultCVData } from '@/types/cv';
 import { CVForm } from './CVForm';
 import { CVPreview } from './CVPreview';
-import { CVCompletionScore } from './CVCompletionScore';
 import { AutoSaveIndicator } from './AutoSaveIndicator';
 import { MobilePreviewDrawer } from './MobilePreviewDrawer';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { AppFooter } from '@/components/layout/AppFooter';
 import { Button } from '@/components/ui/button';
-import { Download, Save, Sparkles, Monitor, Smartphone } from 'lucide-react';
+import { Download, Save, Sparkles, Info } from 'lucide-react';
 import { toast } from 'sonner';
-import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 interface ExtendedCVData extends CVData {
   photo?: string;
 }
 
 export const CVBuilder = () => {
+  const { t } = useLanguage();
   const [cvData, setCVData] = useState<ExtendedCVData>(() => {
     const saved = localStorage.getItem('meucv_current_cv');
     if (saved) {
@@ -33,7 +33,6 @@ export const CVBuilder = () => {
   
   const [isSaving, setIsSaving] = useState(false);
   const [lastSaved, setLastSaved] = useState<Date | undefined>();
-  const [previewMode, setPreviewMode] = useState<'desktop' | 'mobile'>('desktop');
   const saveTimeoutRef = useRef<NodeJS.Timeout>();
   const isMobile = useIsMobile();
 
@@ -41,7 +40,6 @@ export const CVBuilder = () => {
   const autoSave = useCallback((data: ExtendedCVData) => {
     setIsSaving(true);
     
-    // Debounce save
     if (saveTimeoutRef.current) {
       clearTimeout(saveTimeoutRef.current);
     }
@@ -64,12 +62,12 @@ export const CVBuilder = () => {
     setTimeout(() => {
       setIsSaving(false);
       setLastSaved(new Date());
-      toast.success('Currículo guardado com sucesso!');
+      toast.success(t.builder.cvSaved);
     }, 500);
   };
 
   const handleExportPDF = () => {
-    toast.info('Funcionalidade de exportação PDF em breve!');
+    toast.info(t.builder.exportSoon);
   };
 
   useEffect(() => {
@@ -88,15 +86,15 @@ export const CVBuilder = () => {
           <AutoSaveIndicator isSaving={isSaving} lastSaved={lastSaved} className="hidden sm:flex" />
           <Button variant="outline" size="sm" className="hidden sm:flex">
             <Sparkles className="w-4 h-4 mr-1.5" />
-            Melhorar com IA
+            {t.common.improveWithAI}
           </Button>
           <Button variant="outline" size="sm" onClick={handleManualSave}>
             <Save className="w-4 h-4 sm:mr-1.5" />
-            <span className="hidden sm:inline">Guardar</span>
+            <span className="hidden sm:inline">{t.common.save}</span>
           </Button>
           <Button size="sm" onClick={handleExportPDF}>
             <Download className="w-4 h-4 sm:mr-1.5" />
-            <span className="hidden sm:inline">Exportar PDF</span>
+            <span className="hidden sm:inline">{t.common.exportPDF}</span>
           </Button>
         </div>
       </AppHeader>
@@ -114,11 +112,6 @@ export const CVBuilder = () => {
             transition={{ delay: 0.1 }}
             className="order-2 lg:order-1 space-y-4"
           >
-            {/* Score on mobile */}
-            <div className="lg:hidden">
-              <CVCompletionScore cvData={cvData} />
-            </div>
-            
             <CVForm cvData={cvData} onChange={handleDataChange} />
           </motion.div>
 
@@ -129,43 +122,15 @@ export const CVBuilder = () => {
             transition={{ delay: 0.2 }}
             className="order-1 lg:order-2 lg:sticky lg:top-24 lg:h-fit hidden lg:block space-y-4"
           >
-            {/* Score + Preview toggle */}
-            <div className="flex items-center justify-between gap-4">
-              <CVCompletionScore cvData={cvData} className="flex-1" />
-              
-              {/* Preview mode toggle */}
-              <div className="flex items-center bg-muted rounded-lg p-1">
-                <button
-                  onClick={() => setPreviewMode('desktop')}
-                  className={cn(
-                    'p-2 rounded-md transition-colors',
-                    previewMode === 'desktop' ? 'bg-card shadow-sm' : 'text-muted-foreground hover:text-foreground'
-                  )}
-                  title="Vista Desktop"
-                >
-                  <Monitor className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={() => setPreviewMode('mobile')}
-                  className={cn(
-                    'p-2 rounded-md transition-colors',
-                    previewMode === 'mobile' ? 'bg-card shadow-sm' : 'text-muted-foreground hover:text-foreground'
-                  )}
-                  title="Vista Mobile"
-                >
-                  <Smartphone className="w-4 h-4" />
-                </button>
-              </div>
+            {/* Simple progress hint */}
+            <div className="flex items-center gap-2 bg-primary/5 border border-primary/20 rounded-xl px-4 py-3">
+              <Info className="w-4 h-4 text-primary shrink-0" />
+              <p className="text-sm text-muted-foreground">
+                {t.builder.keepFilling}
+              </p>
             </div>
             
-            <div
-              className={cn(
-                'mx-auto transition-all duration-300',
-                previewMode === 'mobile' ? 'max-w-[360px]' : 'max-w-full'
-              )}
-            >
-              <CVPreview cvData={cvData} photo={cvData.photo} />
-            </div>
+            <CVPreview cvData={cvData} photo={cvData.photo} />
           </motion.div>
         </motion.div>
       </main>

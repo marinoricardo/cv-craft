@@ -2,40 +2,9 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, ChevronRight, Sparkles, FileText, Download, Zap } from 'lucide-react';
+import { useLanguage } from '@/i18n/LanguageContext';
 
-interface TourStep {
-  id: string;
-  title: string;
-  description: string;
-  icon: React.ElementType;
-}
-
-const tourSteps: TourStep[] = [
-  {
-    id: 'welcome',
-    title: 'Bem-vindo ao MeuCV! 👋',
-    description: 'Crie currículos profissionais em minutos. Vamos mostrar-te como funciona.',
-    icon: Sparkles,
-  },
-  {
-    id: 'templates',
-    title: 'Escolha um Modelo',
-    description: 'Temos templates modernos e profissionais para diferentes áreas.',
-    icon: FileText,
-  },
-  {
-    id: 'builder',
-    title: 'Editor Intuitivo',
-    description: 'Preencha seus dados com ajuda de IA e veja o resultado em tempo real.',
-    icon: Zap,
-  },
-  {
-    id: 'export',
-    title: 'Exporte em PDF',
-    description: 'Baixe seu currículo pronto para enviar às empresas.',
-    icon: Download,
-  },
-];
+const tourIcons = [Sparkles, FileText, Zap, Download];
 
 interface OnboardingTourProps {
   onComplete?: () => void;
@@ -44,11 +13,13 @@ interface OnboardingTourProps {
 export const OnboardingTour = ({ onComplete }: OnboardingTourProps) => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const { t } = useLanguage();
+
+  const tourSteps = t.onboarding.steps;
 
   useEffect(() => {
     const hasSeenTour = localStorage.getItem('meucv_tour_completed');
     if (!hasSeenTour) {
-      // Delay showing tour for smoother UX
       const timer = setTimeout(() => setIsVisible(true), 1500);
       return () => clearTimeout(timer);
     }
@@ -68,12 +39,8 @@ export const OnboardingTour = ({ onComplete }: OnboardingTourProps) => {
     onComplete?.();
   };
 
-  const handleSkip = () => {
-    handleClose();
-  };
-
   const step = tourSteps[currentStep];
-  const Icon = step.icon;
+  const Icon = tourIcons[currentStep];
   const isLastStep = currentStep === tourSteps.length - 1;
   const progress = ((currentStep + 1) / tourSteps.length) * 100;
 
@@ -90,14 +57,14 @@ export const OnboardingTour = ({ onComplete }: OnboardingTourProps) => {
             onClick={handleClose}
           />
 
-          {/* Modal */}
+          {/* Modal - centered for both mobile and desktop */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-[101] md:inset-x-auto md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-md"
+            className="fixed z-[101] inset-0 flex items-center justify-center p-4"
           >
-            <div className="bg-card rounded-2xl shadow-2xl border border-border overflow-hidden">
+            <div className="bg-card rounded-2xl shadow-2xl border border-border overflow-hidden w-full max-w-md">
               {/* Progress bar */}
               <div className="h-1 bg-muted">
                 <motion.div
@@ -111,7 +78,7 @@ export const OnboardingTour = ({ onComplete }: OnboardingTourProps) => {
               {/* Header */}
               <div className="flex items-center justify-between p-4 border-b border-border">
                 <span className="text-xs text-muted-foreground font-medium">
-                  Passo {currentStep + 1} de {tourSteps.length}
+                  {t.onboarding.step} {currentStep + 1} {t.onboarding.of} {tourSteps.length}
                 </span>
                 <button
                   onClick={handleClose}
@@ -124,7 +91,7 @@ export const OnboardingTour = ({ onComplete }: OnboardingTourProps) => {
               {/* Content */}
               <div className="p-6 text-center">
                 <motion.div
-                  key={step.id}
+                  key={currentStep}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -142,8 +109,8 @@ export const OnboardingTour = ({ onComplete }: OnboardingTourProps) => {
 
               {/* Footer */}
               <div className="p-4 border-t border-border flex items-center justify-between gap-3">
-                <Button variant="ghost" size="sm" onClick={handleSkip}>
-                  Pular
+                <Button variant="ghost" size="sm" onClick={handleClose}>
+                  {t.common.skip}
                 </Button>
                 <div className="flex gap-1.5">
                   {tourSteps.map((_, i) => (
@@ -156,7 +123,7 @@ export const OnboardingTour = ({ onComplete }: OnboardingTourProps) => {
                   ))}
                 </div>
                 <Button size="sm" onClick={handleNext}>
-                  {isLastStep ? 'Começar' : 'Próximo'}
+                  {isLastStep ? t.common.start : t.common.next}
                   <ChevronRight className="w-4 h-4 ml-1" />
                 </Button>
               </div>

@@ -2,17 +2,19 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Home, LayoutTemplate, FolderOpen, User, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const navItems = [
-  { icon: Home, label: 'Início', path: '/' },
-  { icon: LayoutTemplate, label: 'Modelos', path: '/templates' },
-  { icon: Sparkles, label: 'Analisar', path: '/cv-analysis' },
-  { icon: FolderOpen, label: 'Meus CVs', path: '/my-cvs' },
-  { icon: User, label: 'Conta', path: '/auth' },
-];
+import { useLanguage } from '@/i18n/LanguageContext';
 
 export const BottomNav = () => {
   const location = useLocation();
+  const { t } = useLanguage();
+
+  const navItems = [
+    { icon: Home, label: t.common.home, path: '/' },
+    { icon: LayoutTemplate, label: t.common.templates, path: '/templates' },
+    { icon: Sparkles, label: t.common.analyze, path: '/cv-analysis' },
+    { icon: FolderOpen, label: t.common.myCVs, path: '/my-cvs' },
+    { icon: User, label: t.common.account, path: '/auth' },
+  ];
 
   // Don't show on builder page
   if (location.pathname === '/builder') return null;

@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { AppFooter } from '@/components/layout/AppFooter';
+import { useLanguage } from '@/i18n/LanguageContext';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +15,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import {
-  FileText,
   Plus,
   MoreVertical,
   Download,
@@ -37,35 +37,14 @@ interface SavedCV {
 }
 
 const mockCVs: SavedCV[] = [
-  {
-    id: '1',
-    name: 'CV Principal',
-    template: 'Moderno Profissional',
-    lastModified: '2024-01-15T10:30:00',
-    createdAt: '2024-01-10T09:00:00',
-    isComplete: true,
-  },
-  {
-    id: '2',
-    name: 'CV para Tech',
-    template: 'Tech Pro',
-    lastModified: '2024-01-14T15:45:00',
-    createdAt: '2024-01-12T14:00:00',
-    isComplete: true,
-  },
-  {
-    id: '3',
-    name: 'Rascunho Marketing',
-    template: 'Criativo',
-    lastModified: '2024-01-13T08:20:00',
-    createdAt: '2024-01-13T08:00:00',
-    isComplete: false,
-  },
+  { id: '1', name: 'CV Principal', template: 'Moderno Profissional', lastModified: '2024-01-15T10:30:00', createdAt: '2024-01-10T09:00:00', isComplete: true },
+  { id: '2', name: 'CV para Tech', template: 'Tech Pro', lastModified: '2024-01-14T15:45:00', createdAt: '2024-01-12T14:00:00', isComplete: true },
+  { id: '3', name: 'Rascunho Marketing', template: 'Criativo', lastModified: '2024-01-13T08:20:00', createdAt: '2024-01-13T08:00:00', isComplete: false },
 ];
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string, lang: string) => {
   const date = new Date(dateString);
-  return date.toLocaleDateString('pt-PT', {
+  return date.toLocaleDateString(lang === 'pt' ? 'pt-PT' : 'en-US', {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
@@ -96,6 +75,7 @@ export const MyCVs = () => {
   const [cvs, setCVs] = useState<SavedCV[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -108,7 +88,6 @@ export const MyCVs = () => {
       }
       setIsLoading(false);
     }, 800);
-
     return () => clearTimeout(timer);
   }, []);
 
@@ -144,30 +123,25 @@ export const MyCVs = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
       <AppHeader showAnalyzeCV showTemplates showNewCV />
 
-      {/* Main Content */}
       <main className="flex-1 container mx-auto px-4 py-8 pt-24 pb-24 md:pb-8">
         <div className="max-w-5xl mx-auto">
-          {/* Page Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
           >
             <div>
-              <h1 className="text-3xl font-bold text-foreground mb-1">Meus Currículos</h1>
+              <h1 className="text-3xl font-bold text-foreground mb-1">{t.myCVs.title}</h1>
               <p className="text-muted-foreground">
-                {cvs.length} currículo{cvs.length !== 1 ? 's' : ''} guardado
-                {cvs.length !== 1 ? 's' : ''}
+                {t.myCVs.cvCount(cvs.length)}
               </p>
             </div>
-
             <div className="relative w-full md:w-72">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
-                placeholder="Pesquisar currículos..."
+                placeholder={t.myCVs.searchPlaceholder}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -175,7 +149,6 @@ export const MyCVs = () => {
             </div>
           </motion.div>
 
-          {/* CV List */}
           {isLoading ? (
             <LoadingSkeleton />
           ) : filteredCVs.length === 0 ? (
@@ -190,18 +163,16 @@ export const MyCVs = () => {
                     <FolderOpen className="w-8 h-8 text-muted-foreground" />
                   </motion.div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    {searchQuery ? 'Nenhum resultado encontrado' : 'Nenhum currículo ainda'}
+                    {searchQuery ? t.myCVs.noResults : t.myCVs.noCVs}
                   </h3>
                   <p className="text-muted-foreground mb-6 max-w-sm mx-auto">
-                    {searchQuery
-                      ? 'Tente pesquisar com outros termos.'
-                      : 'Comece criando o seu primeiro currículo profissional.'}
+                    {searchQuery ? t.myCVs.tryOtherSearch : t.myCVs.noCVsDesc}
                   </p>
                   {!searchQuery && (
                     <Button asChild>
                       <Link to="/templates">
                         <Plus className="w-4 h-4 mr-2" />
-                        Criar Primeiro CV
+                        {t.myCVs.createFirst}
                       </Link>
                     </Button>
                   )}
@@ -225,15 +196,12 @@ export const MyCVs = () => {
                       onClick={() => handleEdit(cv.id)}
                     >
                       <CardContent className="p-0">
-                        {/* CV Preview Thumbnail */}
                         <div className="aspect-[3/3.5] bg-[hsl(var(--cv-preview-bg))] p-3 relative overflow-hidden">
                           {!cv.isComplete && (
                             <Badge variant="secondary" className="absolute top-2 right-2 text-xs z-10">
-                              Rascunho
+                              {t.common.draft}
                             </Badge>
                           )}
-
-                          {/* Mini CV Preview */}
                           <motion.div
                             className="cv-paper h-full p-2 text-[5px]"
                             whileHover={{ scale: 1.02 }}
@@ -243,7 +211,6 @@ export const MyCVs = () => {
                               <div className="font-bold text-[7px] text-foreground">{cv.name}</div>
                               <div className="text-muted-foreground text-[5px]">Currículo</div>
                             </div>
-
                             <div className="space-y-1">
                               <div className="h-0.5 bg-muted rounded w-full" />
                               <div className="h-0.5 bg-muted rounded w-4/5" />
@@ -252,24 +219,19 @@ export const MyCVs = () => {
                               <div className="h-0.5 bg-muted rounded w-2/3" />
                             </div>
                           </motion.div>
-
-                          {/* Hover overlay */}
                           <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                             <Button size="sm" variant="secondary">
                               <Edit className="w-4 h-4 mr-2" />
-                              Editar
+                              {t.common.edit}
                             </Button>
                           </div>
                         </div>
-
-                        {/* CV Info */}
                         <div className="p-4 border-t border-border">
                           <div className="flex items-start justify-between gap-2">
                             <div className="flex-1 min-w-0">
                               <h3 className="font-semibold text-foreground truncate">{cv.name}</h3>
                               <p className="text-xs text-muted-foreground">{cv.template}</p>
                             </div>
-
                             <DropdownMenu>
                               <DropdownMenuTrigger asChild onClick={(e) => e.stopPropagation()}>
                                 <Button variant="ghost" size="icon" className="h-8 w-8">
@@ -277,45 +239,31 @@ export const MyCVs = () => {
                                 </Button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end">
-                                <DropdownMenuItem
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleEdit(cv.id);
-                                  }}
-                                >
+                                <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleEdit(cv.id); }}>
                                   <Edit className="w-4 h-4 mr-2" />
-                                  Editar
+                                  {t.common.edit}
                                 </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleDuplicate(cv);
-                                  }}
-                                >
+                                <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleDuplicate(cv); }}>
                                   <Copy className="w-4 h-4 mr-2" />
-                                  Duplicar
+                                  {t.common.duplicate}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={(e) => e.stopPropagation()}>
                                   <Download className="w-4 h-4 mr-2" />
-                                  Exportar PDF
+                                  {t.common.exportPDF}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                   className="text-destructive focus:text-destructive"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleDelete(cv.id);
-                                  }}
+                                  onClick={(e) => { e.stopPropagation(); handleDelete(cv.id); }}
                                 >
                                   <Trash2 className="w-4 h-4 mr-2" />
-                                  Eliminar
+                                  {t.common.delete}
                                 </DropdownMenuItem>
                               </DropdownMenuContent>
                             </DropdownMenu>
                           </div>
-
                           <div className="flex items-center gap-1 mt-2 text-xs text-muted-foreground">
                             <Clock className="w-3 h-3" />
-                            <span>Editado {formatDate(cv.lastModified)}</span>
+                            <span>{t.myCVs.edited} {formatDate(cv.lastModified, language)}</span>
                           </div>
                         </div>
                       </CardContent>
@@ -323,7 +271,6 @@ export const MyCVs = () => {
                   </motion.div>
                 ))}
 
-                {/* New CV Card */}
                 <motion.div
                   layout
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -341,8 +288,8 @@ export const MyCVs = () => {
                       >
                         <Plus className="w-7 h-7 text-accent-foreground" />
                       </motion.div>
-                      <p className="font-medium text-foreground">Criar Novo CV</p>
-                      <p className="text-sm text-muted-foreground">Escolher modelo</p>
+                      <p className="font-medium text-foreground">{t.myCVs.createNew}</p>
+                      <p className="text-sm text-muted-foreground">{t.myCVs.chooseTemplate}</p>
                     </CardContent>
                   </Card>
                 </motion.div>
